@@ -1,0 +1,5 @@
+ReWriteEngine On
+ReWriteBase /
+
+# Clean URL for products
+ReWriteRule ^product/([0-9]+)$ product.php?id=$1 [L]

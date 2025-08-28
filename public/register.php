@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('includes/db.php'); // Include the database connection file
+include('../includes/db.php'); // Include the database connection file
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];

@@ -1,29 +1,46 @@
-<?php
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My eCommerce Site</title>
-    <link rel="stylesheet" href="styles.css">
+<!-- header.php -->
+ <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/headerstyle.css">
 </head>
-<body>
-
 <header>
-    <nav>
+    <div class="logo-container">
+        <a href="index.php" class="logo">
+            <img src="../assets/images/logo.png" alt="Logo">
+        </a>
+    </div>
+    
+    <nav class="navbar">
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="products.php">Products</a></li>
-            <li><a href="cart.php">Cart (<?php echo isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0; ?>)</a></li>
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <li><a href="logout.php">Logout</a></li>
-                <li><a href="profile.php">Profile</a></li>
-            <?php else: ?>
-                <li><a href="login.php">Login</a></li>
-                <li><a href="register.php">Register</a></li>
-            <?php endif; ?>
+            <li><a href="categories.php">Categories</a></li>
+            <li><a href="about.php">About Us</a></li>
+            <li><a href="contact.php">Contact</a></li>
         </ul>
     </nav>
+
+    <div class="header-actions">
+        <form action="search.php" method="GET" class="search-form">
+            <input type="text" name="query" placeholder="Search products..." required>
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+        <div class="cart-icon">
+            <a href="cart.php">
+                <i class="fa fa-shopping-cart"></i> 
+                <span class="cart-count">0</span>
+            </a>
+        </div>
+
+        <div class="user-auth">
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="profile.php">My Account</a>
+                <a href="logout.php">Logout</a>
+            <?php else: ?>
+                <a href="login.php">Login</a>
+                <a href="register.php">Register</a>
+            <?php endif; ?>
+        </div>
+    </div>
 </header>

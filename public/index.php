@@ -1,27 +1,42 @@
 <!-- public/index.php -->
 <?php 
 session_start();
-include('../includes/db.php');
-include('../includes/header.php'); ?>
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/header.php'; 
+?>
 
 <main>
     <h1>Welcome to Our eCommerce Site</h1>
     <section id="featured-products">
         <h2>Featured Products</h2>
-        <!-- Display featured products dynamically from the database -->
         <?php
-        $sql = "SELECT * FROM products LIMIT 4";
-        $result = $conn->query($sql);
-        while($row = $result->fetch_assoc()) {
-            echo "<div class='product'>
-                    <img src='/assets/images/" . $row['image'] . "' alt='" . $row['name'] . "'>
-                    <h3>" . $row['name'] . "</h3>
-                    <p>" . $row['price'] . " USD</p>
-                    <a href='/product/" . $row['id'] . "'>View Details</a>
-                  </div>";
+            $stmt = $conn->prepare("SELECT id, name, price, image FROM products LIMIT 4");
+            if ($stmt && $stmt->execute()) {
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    $id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
+                    $name = htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8');
+                    $price = htmlspecialchars(number_format((float)$row['price'], 2), ENT_QUOTES, 'UTF-8');
+                    $image = htmlspecialchars($row['image'], ENT_QUOTES, 'UTF-8');
+                    ?>
+                    <div class="product">
+                        <img src="/assets/images/<?= $image ?>" alt="<?= $name ?>">
+                        <h3><?= $name ?></h3>
+                        <p><?= $price ?> USD</p>
+                        <a href="add_to_cart.php?product_id=<?= $id ?>&quantity=1">Add to Cart</a>
+                    </div>
+                    <?php
+                }
+            } else {
+                echo '<p>No products available.</p>';
+            }
+            $stmt->close();
+        } else {
+            echo '<p>Error loading products.</p>';
         }
         ?>
     </section>
 </main>
 
-<?php include('../includes/footer.php'); ?>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

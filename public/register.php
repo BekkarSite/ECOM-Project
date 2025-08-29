@@ -10,21 +10,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($password !== $confirm_password) {
         $error = 'Passwords do not match!';
-        } else {
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    } else {
+        // Check if the email is already registered to avoid duplicate entries
+        $checkStmt = $conn->prepare('SELECT id FROM users WHERE email = ?');
+        if ($checkStmt) {
+            $checkStmt->bind_param('s', $email);
+            $checkStmt->execute();
+            $checkStmt->store_result();
 
-        $stmt = $conn->prepare('INSERT INTO users (email, password, role) VALUES (?, ?, "customer")');
-        if ($stmt) {
-            $stmt->bind_param('ss', $email, $hashed_password);
-            if ($stmt->execute()) {
-                $success = 'Registration successful! <a href="login.php">Login</a>.';
+            if ($checkStmt->num_rows > 0) {
+                $error = 'Email already registered!';
             } else {
-                $error = 'Error: ' . htmlspecialchars($stmt->error, ENT_QUOTES, 'UTF-8');
+                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $stmt = $conn->prepare('INSERT INTO users (email, password, role) VALUES (?, ?, "customer")');
+
+                if ($stmt) {
+                    $stmt->bind_param('ss', $email, $hashed_password);
+                    if ($stmt->execute()) {
+                        $success = 'Registration successful! <a href="login.php">Login</a>.';
+                    } else {
+                        $error = 'Error: ' . htmlspecialchars($stmt->error, ENT_QUOTES, 'UTF-8');
+                    }
+                    $stmt->close();
+                } else {
+                    $error = 'Database error.';
+                }
             }
             $stmt->close();
         } else {
             $error = 'Database error.';
-                }
+        }
     }
 }
 ?>

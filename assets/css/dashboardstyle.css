@@ -1,0 +1,24 @@
+.dashboard-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.profile, .summary, .orders {
+    margin-bottom: 30px;
+}
+
+.orders table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.orders th, .orders td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.orders th {
+    background-color: #f2f2f2;
+}

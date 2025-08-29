@@ -34,10 +34,10 @@
         </div>
 
         <div class="user-auth">
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="profile.php">My Account</a>
-                <a href="logout.php">Logout</a>
-            <?php else: ?>
+             <?php if (isset($_SESSION['user_id'])): ?>
+                 <a href="dashboard.php">Dashboard</a>
+                 <a href="logout.php">Logout</a>
+             <?php else: ?>
                 <a href="login.php">Login</a>
                 <a href="register.php">Register</a>
             <?php endif; ?>

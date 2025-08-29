@@ -4,9 +4,9 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $confirm_password = $_POST['confirm_password'] ?? '';
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+    $confirm_password = trim($_POST['confirm_password'] ?? '');
 
     if ($password !== $confirm_password) {
         $error = 'Passwords do not match!';
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($checkStmt->num_rows > 0) {
                 $error = 'Email already registered!';
             } else {
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                $hashed_password = password_hash($password, PASSWORD_BCRYPT);
                 $stmt = $conn->prepare('INSERT INTO users (email, password, role) VALUES (?, ?, "customer")');
 
                 if ($stmt) {
@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $error = 'Database error.';
                 }
             }
-            $stmt->close();
+            $checkStmt->close();
         } else {
             $error = 'Database error.';
         }

@@ -17,8 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // If the password is correct, start the session and log the user in
             $_SESSION['admin_id'] = $user['id'];
             $_SESSION['email'] = $user['email'];
-            header('Location: manage_products.php'); // Redirect to the admin panel after login
-        } else {
+            header('Location: dashboard.php'); // Redirect to the admin panel after login        } else {
             $error = "Invalid credentials!";
         }
     } else {

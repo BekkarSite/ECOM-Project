@@ -4,8 +4,8 @@ require_once __DIR__ . '/../includes/db.php';
 require_once __DIR__ . '/../includes/header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
 
     $stmt = $conn->prepare('SELECT id, email, password FROM users WHERE email = ?');
     if ($stmt) {
@@ -22,12 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             } else {
                 $error = 'Invalid credentials!';
             }
-    } else {
-        $error = "No user found with that email!";
+        } else {
+            $error = 'No user found with that email!';
         }
         $stmt->close();
     } else {
-            $error = 'Database error.';
+        $error = 'Database error.';
     }
 }
 ?>

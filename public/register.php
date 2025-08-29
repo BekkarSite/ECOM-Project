@@ -1,37 +1,49 @@
 <?php
 session_start();
-include('../includes/db.php'); // Include the database connection file
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/header.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $confirm_password = $_POST['confirm_password'] ?? '';
 
-    // Check if passwords match
     if ($password !== $confirm_password) {
-        $error = "Passwords do not match!";
-    } else {
-        // Hash the password using bcrypt
+        $error = 'Passwords do not match!';
+        } else {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert user into the database with hashed password
-        $sql = "INSERT INTO users (email, password, role) VALUES ('$email', '$hashed_password', 'customer')";
-        if ($conn->query($sql) === TRUE) {
-            echo "Registration successful! You can now <a href='login.php'>login</a>.";
+        $stmt = $conn->prepare('INSERT INTO users (email, password, role) VALUES (?, ?, "customer")');
+        if ($stmt) {
+            $stmt->bind_param('ss', $email, $hashed_password);
+            if ($stmt->execute()) {
+                $success = 'Registration successful! <a href="login.php">Login</a>.';
+            } else {
+                $error = 'Error: ' . htmlspecialchars($stmt->error, ENT_QUOTES, 'UTF-8');
+            }
+            $stmt->close();
         } else {
-            $error = "Error: " . $conn->error;
-        }
+            $error = 'Database error.';
+                }
     }
 }
 ?>
-
-<form method="POST">
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br>
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br>
-    <label>Confirm Password:</label><br>
-    <input type="password" name="confirm_password" required><br>
-    <button type="submit">Register</button>
-    <?php if (isset($error)) echo "<p>$error</p>"; ?>
-</form>
+<link rel="stylesheet" href="../assets/css/registerstyle.css">
+<main class="register-wrapper">
+    <form method="POST" class="register-form">
+        <h2>Register</h2>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        <?php if (isset($error)): ?>
+            <p class="error"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
+        <?php elseif (isset($success)): ?>
+            <p class="success"><?= $success; ?></p>
+        <?php endif; ?>
+        <button type="submit">Register</button>
+    </form>
+</main>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

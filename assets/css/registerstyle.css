@@ -1,0 +1,44 @@
+/* assets/css/registerstyle.css */
+.register-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.register-form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.register-form h2 {
+    text-align: center;
+}
+
+.register-form label {
+    font-weight: bold;
+}
+
+.register-form input {
+    padding: 8px;
+}
+
+.register-form button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.register-form .error {
+    color: red;
+    font-size: 0.9em;
+}
+
+.register-form .success {
+    color: green;
+    font-size: 0.9em;
+}

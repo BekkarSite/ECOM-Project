@@ -7,7 +7,7 @@ if (!isset($_SESSION['admin_id'])) {
 }
 include('../includes/db.php');
 
-// Handle adding product
+$message = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $description = $_POST['description'];
@@ -23,33 +23,53 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO products (name, description, price, category_id, image, stock)
             VALUES ('$name', '$description', '$price', '$category_id', '$image', '$stock')";
     if ($conn->query($sql) === TRUE) {
-        echo "Product added successfully!";
+        $message = 'Product added successfully!';
     } else {
-        echo "Error: " . $conn->error;
+        $message = 'Error: ' . $conn->error;
     }
 }
-?>
 
-<h2>Add Product</h2>
-<form method="POST" enctype="multipart/form-data">
-    <label>Product Name:</label><br>
-    <input type="text" name="name" required><br>
-    <label>Description:</label><br>
-    <textarea name="description" required></textarea><br>
-    <label>Price:</label><br>
-    <input type="number" name="price" required><br>
-    <label>Category:</label><br>
-    <select name="category_id" required>
-        <?php
-        $categories = $conn->query("SELECT * FROM categories");
-        while ($row = $categories->fetch_assoc()) {
-            echo "<option value='{$row['id']}'>{$row['name']}</option>";
-        }
-        ?>
-    </select><br>
-    <label>Image:</label><br>
-    <input type="file" name="image" required><br>
-    <label>Stock:</label><br>
-    <input type="number" name="stock" required><br>
-    <button type="submit">Add Product</button>
-</form>
+$categories = $conn->query("SELECT * FROM categories");
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../assets/css/manageproductsstyle.css">
+</head>
+
+<body>
+    <div class="admin-container">
+        <?php include 'sidebar.php'; ?>
+        <div class="admin-content">
+            <h2>Add Product</h2>
+            <?php if (!empty($message)): ?>
+                <p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
+            <?php endif; ?>
+            <form method="POST" enctype="multipart/form-data">
+                <label>Product Name:</label><br>
+                <input type="text" name="name" required><br>
+                <label>Description:</label><br>
+                <textarea name="description" required></textarea><br>
+                <label>Price:</label><br>
+                <input type="number" name="price" required><br>
+                <label>Category:</label><br>
+                <select name="category_id" required>
+                    <?php while ($row = $categories->fetch_assoc()) { ?>
+                        <option value="<?php echo $row['id']; ?>"><?php echo htmlspecialchars($row['name']); ?></option>
+                    <?php } ?>
+                </select><br>
+                <label>Image:</label><br>
+                <input type="file" name="image" required><br>
+                <label>Stock:</label><br>
+                <input type="number" name="stock" required><br>
+                <button type="submit">Add Product</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html

@@ -1,3 +1,46 @@
+.admin-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #343a40;
+    color: #fff;
+    padding: 20px;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    color: #fff;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.sidebar a:hover {
+    background-color: #495057;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
 .dashboard-stats {
     display: flex;
     gap: 20px;
@@ -22,20 +65,4 @@
 
 .stat-label {
     color: #555;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: 15px;
-}
-
-nav a {
-    text-decoration: none;
-    color: #007bff;
-}
-
-nav a:hover {
-    text-decoration: underline;
 }

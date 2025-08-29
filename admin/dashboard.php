@@ -33,37 +33,38 @@ $categoryCount = getCount($conn, 'categories');
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/admin.css">
     <link rel="stylesheet" href="../assets/css/admindashboard.css">
 </head>
 
 <body>
-    <h1>Admin Dashboard</h1>
-    <p>Welcome, <?= htmlspecialchars($_SESSION['email'], ENT_QUOTES, 'UTF-8'); ?>!
-    </p>
-    <div class="dashboard-stats">
-        <div class="stat">
-            <span class="stat-number"><?= htmlspecialchars($productCount); ?></span>
-            <span class="stat-label">Products</span>
-        </div>
-        <div class="stat">
-            <span class="stat-number"><?= htmlspecialchars($categoryCount); ?></span>
-            <span class="stat-label">Categories</span>
-        </div>
-        <div class="stat">
-            <span class="stat-number"><?= htmlspecialchars($orderCount); ?></span>
-            <span class="stat-label">Orders</span>
-        </div>
-        <div class="stat">
-            <span class="stat-number"><?= htmlspecialchars($userCount); ?></span>
-            <span class="stat-label">Users</span>
-        </div>
+    <div class="admin-container">
+        <?php include 'sidebar.php'; ?>
+        <div class="admin-content">
+            <h1>Admin Dashboard</h1>
+            <p>Welcome, <?= htmlspecialchars($_SESSION['email'], ENT_QUOTES, 'UTF-8'); ?>!</p>
+            <div class="dashboard-stats">
+                <div class="stat">
+                    <span class="stat-number"><?= htmlspecialchars($productCount); ?></span>
+                    <span class="stat-label">Products</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number"><?= htmlspecialchars($categoryCount); ?></span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number"><?= htmlspecialchars($orderCount); ?></span>
+                    <span class="stat-label">Orders</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number"><?= htmlspecialchars($userCount); ?></span>
+                    <span class="stat-label">Users</span>
+                </div>
+            </div>
+                </div>
+            </div>
+        </main>
     </div>
-    <nav>
-        <ul>
-            <li><a href="manage_products.php">Manage Products</a></li>
-            <li><a href="../public/logout.php">Logout</a></li>
-        </ul>
-    </nav>
 </body>
 
 </html>

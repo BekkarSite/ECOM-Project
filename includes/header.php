@@ -26,12 +26,12 @@
             <button type="submit"><i class="fa fa-search"></i></button>
         </form>
 
-        <div class="cart-icon">
-            <a href="cart.php">
-                <i class="fa fa-shopping-cart"></i> 
-                <span class="cart-count">0</span>
-            </a>
-        </div>
+         <div class="cart-icon">
+             <a href="cart.php">
+                 <i class="fa fa-shopping-cart"></i>
+                 <span class="cart-count"><?php echo array_sum($_SESSION['cart'] ?? []); ?></span>
+             </a>
+         </div>
 
         <div class="user-auth">
              <?php if (isset($_SESSION['user_id'])): ?>

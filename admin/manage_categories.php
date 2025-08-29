@@ -8,14 +8,15 @@ if (!isset($_SESSION['admin_id'])) {
 include('../includes/db.php');
 
 // Handle adding category
+$message = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $stmt = $conn->prepare("INSERT INTO categories (name) VALUES (?)");
     $stmt->bind_param("s", $name);
     if ($stmt->execute()) {
-        echo "Category added successfully!";
+        $message = 'Category added successfully!';
     } else {
-        echo "Error: " . $conn->error;
+        $message = 'Error: ' . $conn->error;
     }
     $stmt->close();
 }
@@ -23,17 +24,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Fetch categories
 $categories = $conn->query("SELECT id, name FROM categories");
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<h2>Manage Categories</h2>
-<form method="POST">
-    <label>Category Name:</label><br>
-    <input type="text" name="name" required><br>
-    <button type="submit">Add Category</button>
-</form>
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Categories</title>
+    <link rel="stylesheet" href="../assets/css/admindashboard.css">
+</head>
 
-<h3>Existing Categories</h3>
-<ul>
-<?php while ($row = $categories->fetch_assoc()): ?>
-    <li><?= htmlspecialchars($row['name']) ?></li>
-<?php endwhile; ?>
-</ul>
+<body>
+    <div class="admin-container">
+        <?php include 'sidebar.php'; ?>
+        <main class="content">
+            <h2>Manage Categories</h2>
+            <?php if (!empty($message)): ?>
+                <p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
+            <?php endif; ?>
+            <form method="POST">
+                <label>Category Name:</label><br>
+                <input type="text" name="name" required><br>
+                <button type="submit">Add Category</button>
+            </form>
+
+            <h3>Existing Categories</h3>
+            <ul>
+                <?php while ($row = $categories->fetch_assoc()): ?>
+                    <li><?= htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?></li>
+                <?php endwhile; ?>
+            </ul>
+        </main>
+    </div>
+</body>
+
+</html>

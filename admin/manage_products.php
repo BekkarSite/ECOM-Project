@@ -50,62 +50,69 @@ $categories = $conn->query('SELECT id, name FROM categories');
 <head>
     <meta charset="UTF-8" />
     <title>Manage Products</title>
+    <link rel="stylesheet" href="../assets/css/admindashboard.css" />
     <link rel="stylesheet" href="../assets/css/manageproductsstyle.css" />
 </head>
 
 <body>
-    <div class="manage-products-wrapper">
-        <h2>Manage Products</h2>
+    <div class="admin-container">
+        <?php include 'sidebar.php'; ?>
+        <main class="content">
+            <div class="manage-products-wrapper">
+                <h2>Manage Products</h2>
 
-        <?php if (!empty($message)): ?>
-            <p><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
-        <?php endif; ?>
+                <?php if (!empty($message)): ?>
+                    <p><?php echo htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
+                <?php endif; ?>
 
-        <form method="POST" enctype="multipart/form-data">
-            <h3>Add Product</h3>
-            <label>Product Name:</label><br />
-            <input type="text" name="name" required /><br />
-            <label>Description:</label><br />
-            <textarea name="description" required></textarea><br />
-            <label>Price:</label><br />
-            <input type="number" step="0.01" name="price" required /><br />
-            <label>Category:</label><br />
-            <select name="category_id" required>
-                <?php while ($row = $categories->fetch_assoc()): ?>
-                    <option value="<?php echo $row['id']; ?>">
-                        <?php echo htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?>
-                    </option>
-                <?php endwhile; ?>
-            </select><br />
-            <label>Image:</label><br />
-            <input type="file" name="image" required /><br />
-            <label>Stock:</label><br />
-            <input type="number" name="stock" required /><br />
-            <button type="submit" name="add_product">Add Product</button>
-        </form>
+                <form method="POST" enctype="multipart/form-data">
+                    <h3>Add Product</h3>
+                    <label>Product Name:</label><br />
+                    <input type="text" name="name" required /><br />
+                    <label>Description:</label><br />
+                    <textarea name="description" required></textarea><br />
+                    <label>Price:</label><br />
+                    <input type="number" step="0.01" name="price" required /><br />
+                    <label>Category:</label><br />
+                    <select name="category_id" required>
+                        <?php while ($row = $categories->fetch_assoc()): ?>
+                            <option value="<?php echo $row['id']; ?>">
+                                <?php echo htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?>
+                            </option>
+                        <?php endwhile; ?>
+                    </select><br />
+                    <label>Image:</label><br />
+                    <input type="file" name="image" required /><br />
+                    <label>Stock:</label><br />
+                    <input type="number" name="stock" required /><br />
+                    <button type="submit" name="add_product">Add Product</button>
+                </form>
 
-        <h3>Existing Products</h3>
-        <table>
-            <tr>
-                <th>Product Name</th>
-                <th>Price</th>
-                <th>Stock</th>
-                <th>Action</th>
-            </tr>
-            <?php if ($products): ?>
-                <?php while ($product = $products->fetch_assoc()): ?>
+                <h3>Existing Products</h3>
+                <table>
                     <tr>
-                        <td><?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?></td>
-                        <td><?php echo htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8'); ?></td>
-                        <td><?php echo htmlspecialchars($product['stock'], ENT_QUOTES, 'UTF-8'); ?></td>
-                        <td>
-                            <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a> |
-                            <a href="delete_product.php?id=<?php echo $product['id']; ?>">Delete</a>
-                        </td>
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Action</th>
                     </tr>
-                <?php endwhile; ?>
-            <?php endif; ?>
-        </table>
+                    <?php if ($products): ?>
+                        <?php while ($product = $products->fetch_assoc()): ?>
+                            <tr>
+                                <td><?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo htmlspecialchars($product['stock'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td>
+                                    <a href="edit_product.php?id=<?php echo $product['id']; ?>">Edit</a> |
+                                    <a href="delete_product.php?id=<?php echo $product['id']; ?>">Delete</a>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
+                    <?php endif; ?>
+                </table>
+            </div>
+        </main>
+    </div>
 </body>
 
 </html>

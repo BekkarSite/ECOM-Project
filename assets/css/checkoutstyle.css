@@ -1,0 +1,45 @@
+/* assets/css/checkoutstyle.css */
+.checkout {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.checkout h1 {
+    text-align: center;
+}
+
+.checkout ul {
+    list-style: none;
+    padding: 0;
+}
+
+.checkout ul li {
+    margin-bottom: 0.5rem;
+}
+
+.checkout form label {
+    display: block;
+    margin-top: 1rem;
+}
+
+.checkout form textarea,
+.checkout form select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.checkout form button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.checkout form button:hover {
+    background-color: #0056b3;
+}

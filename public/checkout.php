@@ -1,85 +1,110 @@
 <!-- public/checkout.php -->
 <?php
 session_start();
-include('../includes/db.php');
+require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/header.php';
 
-// Ensure the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php'); // Redirect to login if not logged in
+    header('Location: login.php');
     exit();
 }
 
-// Fetch the user's cart
-$cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
-
-if (count($cart) == 0) {
-    echo "Your cart is empty!";
+$cart = $_SESSION['cart'] ?? [];
+if (count($cart) === 0) {
+    echo '<main class="checkout"><p>Your cart is empty.</p></main>';
+    require_once __DIR__ . '/../includes/footer.php';
     exit();
 }
 
-// Calculate total price of items in the cart
-$total_price = 0;
+$total = 0;
+$items = [];
 foreach ($cart as $product_id => $quantity) {
-    $sql = "SELECT * FROM products WHERE id = $product_id";
-    $product = $conn->query($sql)->fetch_assoc();
-    $total_price += $product['price'] * $quantity;
+    $stmt = $conn->prepare('SELECT name, price FROM products WHERE id = ?');
+    if ($stmt) {
+        $stmt->bind_param('i', $product_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($row = $result->fetch_assoc()) {
+            $name = $row['name'];
+            $price = (float) $row['price'];
+            $subtotal = $price * $quantity;
+            $total += $subtotal;
+            $items[] = [
+                'id' => $product_id,
+                'name' => $name,
+                'quantity' => $quantity,
+                'price' => $price,
+                'subtotal' => $subtotal,
+            ];
+        }
+        $stmt->close();
+    }
 }
 
-// Handle order submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $address = $_POST['address'];
-    $payment_method = $_POST['payment_method'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $address = $_POST['address'] ?? '';
+    $payment_method = $_POST['payment_method'] ?? '';
+    $user_id = (int) $_SESSION['user_id'];
+    $status = 'pending';
 
-    // Insert order into the orders table
-    $user_id = $_SESSION['user_id'];
-    $sql = "INSERT INTO orders (user_id, total_price, status) VALUES ($user_id, $total_price, 'pending')";
-    if ($conn->query($sql) === TRUE) {
-        $order_id = $conn->insert_id;
+    $stmt = $conn->prepare('INSERT INTO orders (user_id, total_price, status) VALUES (?, ?, ?)');
+    if ($stmt) {
+        $stmt->bind_param('ids', $user_id, $total, $status);
+        if ($stmt->execute()) {
+            $order_id = $stmt->insert_id;
+            $stmt->close();
+            $detailStmt = $conn->prepare(
+                'INSERT INTO order_details (order_id, product_id, quantity, price) VALUES (?, ?, ?, ?)'
+            );
+            if ($detailStmt) {
+                foreach ($items as $item) {
+                    $detailStmt->bind_param('iiid', $order_id, $item['id'], $item['quantity'], $item['price']);
+                    $detailStmt->execute();
+                }
+                $detailStmt->close();
+            }
 
-        // Insert order details for each product in the cart
-        foreach ($cart as $product_id => $quantity) {
-            $sql = "SELECT * FROM products WHERE id = $product_id";
-            $product = $conn->query($sql)->fetch_assoc();
-            $price = $product['price'];
-
-            // Insert into order_details table
-            $sql = "INSERT INTO order_details (order_id, product_id, quantity, price) VALUES ($order_id, $product_id, $quantity, $price)";
-            $conn->query($sql);
+            unset($_SESSION['cart']);
+            header('Location: order_confirmation.php?order_id=' . $order_id);
+            exit();
         }
 
-        // Clear the cart after order placement
-        unset($_SESSION['cart']);
-
-        // Send user to order confirmation page (or payment gateway)
-        header("Location: order_confirmation.php?order_id=$order_id");
-        exit();
-    } else {
-        echo "Error: " . $conn->error;
+        $stmt->close();
     }
+    echo '<p>Error placing order.</p>';
 }
 ?>
 
-<h2>Checkout</h2>
-<h3>Your Cart:</h3>
-<ul>
-    <?php
-    foreach ($cart as $product_id => $quantity) {
-        $sql = "SELECT * FROM products WHERE id = $product_id";
-        $product = $conn->query($sql)->fetch_assoc();
-        echo "<li>{$product['name']} - Quantity: $quantity - Price: {$product['price']}</li>";
-    }
-    ?>
-</ul>
-<h3>Total Price: <?php echo $total_price; ?> PKR</h3>
+<link rel="stylesheet" href="../assets/css/checkoutstyle.css">
 
-<h3>Shipping Information</h3>
-<form method="POST">
-    <label>Shipping Address:</label><br>
-    <textarea name="address" required></textarea><br>
-    <label>Payment Method:</label><br>
-    <select name="payment_method" required>
-        <option value="credit_card">Credit Card</option>
-        <option value="paypal">PayPal</option>
-    </select><br>
-    <button type="submit">Place Order</button>
-</form>
+<main class="checkout">
+    <h1>Checkout</h1>
+
+    <h2>Your Cart</h2>
+    <ul>
+        <?php foreach ($items as $item): ?>
+            <li>
+                <?= htmlspecialchars($item['name'], ENT_QUOTES, 'UTF-8') ?> -
+                Quantity: <?= (int) $item['quantity'] ?> -
+                Price: <?= number_format($item['price'], 2) ?> PKR
+            </li>
+        <?php endforeach; ?>
+    </ul>
+
+    <h3>Total Price: <?= number_format($total, 2) ?> PKR</h3>
+
+    <h2>Shipping Information</h2>
+    <form method="POST">
+        <label for="address">Shipping Address:</label>
+        <textarea name="address" id="address" required></textarea>
+
+        <label for="payment_method">Payment Method:</label>
+        <select name="payment_method" id="payment_method" required>
+            <option value="credit_card">Credit Card</option>
+            <option value="paypal">PayPal</option>
+        </select>
+
+        <button type="submit">Place Order</button>
+    </form>
+</main>
+<?php require_once __DIR__ . '/../includes/footer.php'; ?>

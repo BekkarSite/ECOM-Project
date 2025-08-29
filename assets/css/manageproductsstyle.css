@@ -1,0 +1,54 @@
+/* assets/css/manageproductsstyle.css */
+.manage-products-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.manage-products-wrapper h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.manage-products-wrapper form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.manage-products-wrapper form label {
+    font-weight: bold;
+}
+
+.manage-products-wrapper form input,
+.manage-products-wrapper form textarea,
+.manage-products-wrapper form select {
+    padding: 8px;
+}
+
+.manage-products-wrapper form button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.manage-products-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.manage-products-wrapper table th,
+.manage-products-wrapper table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.manage-products-wrapper table th {
+    background-color: #f2f2f2;
+}
+
+/* End of manageproductsstyle.css */

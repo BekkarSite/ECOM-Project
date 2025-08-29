@@ -41,5 +41,5 @@ if (isset($_GET['order_id'])) {
     } ?>
 </ul>
 
-<h3>Total Price: <?php echo $order['total_price']; ?> USD</h3>
+<h3>Total Price: <?php echo $order['total_price']; ?> PKR</h3>
 <p>Status: <?php echo ucfirst($order['status']); ?></p>

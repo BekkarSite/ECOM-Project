@@ -65,7 +65,7 @@ $orders = $orderStmt->get_result();
                     <?php while ($order = $orders->fetch_assoc()): ?>
                         <tr>
                             <td><?= $order['id']; ?></td>
-                            <td><?= number_format($order['total_price'], 2); ?> USD</td>
+                            <td><?= number_format($order['total_price'], 2); ?> PKR</td>
                             <td><?= htmlspecialchars(ucfirst($order['status']), ENT_QUOTES, 'UTF-8'); ?></td>
                         </tr>
                     <?php endwhile; ?>

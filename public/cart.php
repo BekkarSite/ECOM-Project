@@ -69,8 +69,8 @@ if (isset($_GET['action'])) {
                                     <?= (int) $quantity ?>
                                     <a href="cart.php?action=increase&amp;product_id=<?= (int) $product_id ?>" class="qty-btn">+</a>
                                 </td>
-                                <td><?= number_format($price, 2) ?> USD</td>
-                                <td><?= number_format($subtotal, 2) ?> USD</td>
+                                <td><?= number_format($price, 2) ?> PKR</td>
+                                <td><?= number_format($subtotal, 2) ?> PKR</td>
                             </tr>
                 <?php
                         endif;
@@ -82,7 +82,7 @@ if (isset($_GET['action'])) {
             <tfoot>
                 <tr>
                     <td colspan="3"><strong>Total</strong></td>
-                    <td><strong><?= number_format($total, 2) ?> USD</strong></td>
+                    <td><strong><?= number_format($total, 2) ?> PKR</strong></td>
                 </tr>
             </tfoot>
         </table>

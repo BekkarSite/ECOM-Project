@@ -23,7 +23,7 @@ require_once __DIR__ . '/../includes/header.php';
                     <div class="product">
                         <img src="/assets/images/<?= $image ?>" alt="<?= $name ?>">
                         <h3><?= $name ?></h3>
-                        <p><?= $price ?> USD</p>
+                        <p><?= $price ?> PKR</p>
                         <a href="add_to_cart.php?product_id=<?= $id ?>&quantity=1">Add to Cart</a>
                     </div>
                     <?php

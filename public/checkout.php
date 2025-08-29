@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     ?>
 </ul>
-<h3>Total Price: <?php echo $total_price; ?> USD</h3>
+<h3>Total Price: <?php echo $total_price; ?> PKR</h3>
 
 <h3>Shipping Information</h3>
 <form method="POST">

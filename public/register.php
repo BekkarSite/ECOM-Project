@@ -27,7 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($stmt) {
                     $stmt->bind_param('ss', $email, $hashed_password);
                     if ($stmt->execute()) {
-                        $success = 'Registration successful! <a href="login.php">Login</a>.';
+                        // Automatically log the user in after successful registration
+                        $_SESSION['user_id'] = $conn->insert_id;
+                        $_SESSION['email'] = $email;
+                        header('Location: index.php');
+                        exit;
                     } else {
                         $error = 'Error: ' . htmlspecialchars($stmt->error, ENT_QUOTES, 'UTF-8');
                     }
@@ -55,8 +59,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="password" id="confirm_password" name="confirm_password" required>
         <?php if (isset($error)): ?>
             <p class="error"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
-        <?php elseif (isset($success)): ?>
-            <p class="success"><?= $success; ?></p>
         <?php endif; ?>
         <button type="submit">Register</button>
     </form>

@@ -1,20 +1,27 @@
 <!-- public/add_to_cart.php -->
 <?php
 session_start();
-include('../includes/db.php');
 
-if (isset($_GET['product_id']) && isset($_GET['quantity'])) {
-    $product_id = $_GET['product_id'];
-    $quantity = $_GET['quantity'];
+// Ensure both product_id and quantity are provided
+if (isset($_GET['product_id'], $_GET['quantity'])) {
+    // Cast incoming values to integers to avoid unexpected input
+    $product_id = (int) $_GET['product_id'];
+    $quantity = max(1, (int) $_GET['quantity']);
 
-    // Check if product is already in the cart
-    if (isset($_SESSION['cart'][$product_id])) {
-        $_SESSION['cart'][$product_id] += $quantity; // Update quantity if product is already in the cart
-    } else {
-        $_SESSION['cart'][$product_id] = $quantity; // Add new product to the cart
+    // Initialize the cart if it doesn't exist yet
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
     }
 
-    // Redirect to the cart page
+    // Check if product is already in the cart and update accordingly
+    if (isset($_SESSION['cart'][$product_id])) {
+        $_SESSION['cart'][$product_id] += $quantity;
+    } else {
+        $_SESSION['cart'][$product_id] = $quantity;
+    }
+
+    // Redirect to the cart page and stop further execution
     header('Location: cart.php');
+    exit();
 }
 ?>

@@ -24,12 +24,30 @@ if ($result && $row = $result->fetch_assoc()) {
     $registrationPaused = $row['value'] === '1';
 }
 
+// Handle search
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
 // Fetch users
 $users = [];
-$result = $conn->query("SELECT id, email, role, is_banned, created_at FROM users ORDER BY id ASC");
-if ($result) {
-    while ($row = $result->fetch_assoc()) {
-        $users[] = $row;
+if ($search !== '') {
+    $searchTerm = "%" . $search . "%";
+    $searchId = (int) $search;
+    $stmt = $conn->prepare("SELECT id, email, role, is_banned, created_at FROM users WHERE email LIKE ? OR id = ? ORDER BY id ASC");
+    if ($stmt) {
+        $stmt->bind_param('si', $searchTerm, $searchId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+        $stmt->close();
+    }
+} else {
+    $result = $conn->query("SELECT id, email, role, is_banned, created_at FROM users ORDER BY id ASC");
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
     }
 }
 ?>
@@ -39,52 +57,61 @@ if ($result) {
 <head>
     <meta charset="UTF-8">
     <title>Manage Users</title>
-    <link rel="stylesheet" href="../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../../assets/css/manageusersstyle.css">
 </head>
 
 <body>
     <div class="admin-container">
         <?php include 'sidebar.php'; ?>
         <main class="content">
-            <h1>Manage Users</h1>
-            <form method="POST">
-                <input type="hidden" name="toggle_registration" value="1">
-                <label>
-                    <input type="checkbox" name="registration_paused" value="1" <?php if ($registrationPaused) echo 'checked'; ?>>
-                    Pause User Registration
-                </label>
-                <button type="submit">Save</button>
-            </form>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Created At</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($users as $user): ?>
+            <div class="manage-users-wrapper">
+                <h1>Manage Users</h1>
+                <div class="top-actions">
+                    <form method="GET" class="search-form">
+                        <input type="text" name="search" placeholder="Search by email or ID" value="<?= htmlspecialchars($search, ENT_QUOTES, 'UTF-8'); ?>">
+                        <button type="submit">Search</button>
+                    </form>
+                    <form method="POST" class="registration-form">
+                        <input type="hidden" name="toggle_registration" value="1">
+                        <label>
+                            <input type="checkbox" name="registration_paused" value="1" <?php if ($registrationPaused) echo 'checked'; ?>>
+                            Pause User Registration
+                        </label>
+                        <button type="submit">Save</button>
+                    </form>
+                </div>
+                <table>
+                    <thead>
                         <tr>
-                            <td><?= htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= htmlspecialchars($user['role'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td><?= $user['is_banned'] ? 'Banned' : 'Active'; ?></td>
-                            <td><?= htmlspecialchars($user['created_at'], ENT_QUOTES, 'UTF-8'); ?></td>
-                            <td>
-                                <a href="edit_user.php?id=<?= urlencode($user['id']); ?>">Edit</a>
-                                <a href="toggle_user_status.php?id=<?= urlencode($user['id']); ?>&action=<?= $user['is_banned'] ? 'unban' : 'ban'; ?>" onclick="return confirm('Are you sure?');">
-                                    <?= $user['is_banned'] ? 'Unban' : 'Ban'; ?>
-                                </a>
-                                <a href="delete_user.php?id=<?= urlencode($user['id']); ?>" onclick="return confirm('Are you sure?');">Delete</a>
-                            </td>
+                            <th>ID</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Created At</th>
+                            <th>Actions</th>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($users as $user): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($user['id'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?= htmlspecialchars($user['email'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?= htmlspecialchars($user['role'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?= $user['is_banned'] ? 'Banned' : 'Active'; ?></td>
+                                <td><?= htmlspecialchars($user['created_at'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td>
+                                    <a href="edit_user.php?id=<?= urlencode($user['id']); ?>">Edit</a>
+                                    <a href="toggle_user_status.php?id=<?= urlencode($user['id']); ?>&action=<?= $user['is_banned'] ? 'unban' : 'ban'; ?>" onclick="return confirm('Are you sure?');">
+                                        <?= $user['is_banned'] ? 'Unban' : 'Ban'; ?>
+                                    </a>
+                                    <a href="delete_user.php?id=<?= urlencode($user['id']); ?>" onclick="return confirm('Are you sure?');">Delete</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </main>
     </div>
 </body>

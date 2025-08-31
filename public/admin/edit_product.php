@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stock = $_POST['stock'];
 
     if ($image) {
-        $target_dir = "../assets/images/";
+        $target_dir = "../../assets/images/";
         $target_file = $target_dir . basename($image);
         move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
         $image_sql = ", image='$image'";
@@ -50,8 +50,8 @@ $categories = $conn->query("SELECT id, name FROM categories");
 <head>
     <meta charset="UTF-8">
     <title>Edit Product</title>
-    <link rel="stylesheet" href="../assets/css/admindashboard.css">
-    <link rel="stylesheet" href="../assets/css/manageproductsstyle.css">
+    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../../assets/css/manageproductsstyle.css">
 </head>
 
 <body>

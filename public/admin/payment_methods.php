@@ -10,7 +10,7 @@ if (!isset($_SESSION['admin_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Payment Methods</title>
-    <link rel="stylesheet" href="../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
 </head>
 <body>
     <div class="admin-container">

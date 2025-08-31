@@ -30,7 +30,7 @@ $categories = $conn->query("SELECT id, name FROM categories");
 <head>
     <meta charset="UTF-8">
     <title>Manage Categories</title>
-    <link rel="stylesheet" href="../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
 </head>
 
 <body>

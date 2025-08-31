@@ -1,0 +1,54 @@
+/* assets/css/manageusersstyle.css */
+.manage-users-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.manage-users-wrapper h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.manage-users-wrapper .top-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.manage-users-wrapper .top-actions form {
+    margin: 0;
+}
+
+.manage-users-wrapper .top-actions input[type="text"] {
+    padding: 8px;
+}
+
+.manage-users-wrapper .top-actions button {
+    padding: 8px 12px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.manage-users-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.manage-users-wrapper table th,
+.manage-users-wrapper table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.manage-users-wrapper table th {
+    background-color: #f2f2f2;
+}
+
+/* End of manageusersstyle.css */

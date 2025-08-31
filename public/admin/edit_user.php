@@ -60,7 +60,7 @@ if ($stmt) {
 <head>
     <meta charset="UTF-8">
     <title>Edit User</title>
-    <link rel="stylesheet" href="../assets/css/admindashboard.css">
+   <link rel="stylesheet" href="../../assets/css/admindashboard.css">
 </head>
 
 <body>

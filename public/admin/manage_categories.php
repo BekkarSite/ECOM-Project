@@ -5,7 +5,7 @@ if (!isset($_SESSION['admin_id'])) {
     header('Location: admin_login.php');
     exit();
 }
-include('../includes/db.php');
+include('../../config/db.php');
 
 // Handle adding category
 $message = '';

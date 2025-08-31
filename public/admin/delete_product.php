@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
-include('../includes/db.php');
+include('../../config/db.php');
 
 if (isset($_GET['id'])) {
     $product_id = $_GET['id'];

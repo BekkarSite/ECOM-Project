@@ -1,8 +1,8 @@
 <!-- public/checkout.php -->
 <?php
 session_start();
-require_once __DIR__ . '/../includes/db.php';
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../app/includes/header.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -12,7 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 $cart = $_SESSION['cart'] ?? [];
 if (count($cart) === 0) {
     echo '<main class="checkout"><p>Your cart is empty.</p></main>';
-    require_once __DIR__ . '/../includes/footer.php';
+    require_once __DIR__ . '/../app/includes/footer.php';
     exit();
 }
 
@@ -107,4 +107,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit">Place Order</button>
     </form>
 </main>
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>

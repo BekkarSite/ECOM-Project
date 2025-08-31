@@ -1,8 +1,8 @@
 <!-- public/index.php -->
 <?php 
 session_start();
-require_once __DIR__ . '/../includes/db.php';
-require_once __DIR__ . '/../includes/header.php'; 
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../app/includes/header.php';  
 ?>
 
 <main>
@@ -39,4 +39,4 @@ require_once __DIR__ . '/../includes/header.php';
     </section>
 </main>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>

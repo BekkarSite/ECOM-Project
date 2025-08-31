@@ -8,7 +8,7 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 // Include the database connection to fetch summary statistics
-include('../includes/db.php');
+include('../../config/db.php');
 
 // Helper function to fetch counts from a table
 function getCount(mysqli $conn, string $table): int

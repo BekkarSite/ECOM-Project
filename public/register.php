@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../includes/db.php';
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../app/includes/header.php';
 
 $registrationPaused = false;
 $settingsStmt = $conn->prepare("SELECT value FROM settings WHERE name = 'registration_paused' LIMIT 1");
@@ -82,4 +82,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     <?php endif; ?>
 </main>
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>

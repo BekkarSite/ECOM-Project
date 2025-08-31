@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/../includes/db.php';
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../app/includes/header.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -77,4 +77,4 @@ $orders = $orderStmt->get_result();
     </section>
 </main>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>

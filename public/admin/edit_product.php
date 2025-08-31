@@ -4,7 +4,7 @@ if (!isset($_SESSION['admin_id'])) {
     header('Location: admin_login.php');
     exit();
 }
-include('../includes/db.php');
+include('../../config/db.php');
 
 if (isset($_GET['id'])) {
     $product_id = (int) $_GET['id'];

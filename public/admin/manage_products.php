@@ -4,7 +4,7 @@ if (!isset($_SESSION['admin_id'])) {
     header('Location: admin_login.php');
     exit();
 }
-require_once '../includes/db.php';
+require_once '../../config/db.php';
 
 $message = '';
 

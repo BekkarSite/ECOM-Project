@@ -1,8 +1,8 @@
 <!-- public/products.php -->
 <?php
 session_start();
-require_once __DIR__ . '/../includes/db.php';
-require_once __DIR__ . '/../includes/header.php';
+require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../app/includes/header.php';
 
 // Fetch categories for filter
 $categories = $conn->query("SELECT id, name FROM categories");
@@ -48,4 +48,4 @@ if ($stmt && $stmt->execute()) {
         <?php endif; ?>
     </section>
 </main>
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>

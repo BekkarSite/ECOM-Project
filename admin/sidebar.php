@@ -13,6 +13,6 @@
         <li><a href="manage_categories.php">Product Categories</a></li>
         <li><a href="payment_methods.php">Payment Methods</a></li>
         <li><a href="manage_orders.php">Order Management</a></li>
-        <li><a href="../logout.php">Logout</a></li>
+        <li><a href="../public/logout.php">Logout</a></li>
         </ul>
 </aside>

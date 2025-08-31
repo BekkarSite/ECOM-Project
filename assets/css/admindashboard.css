@@ -83,8 +83,8 @@ body {
 
 .admin-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 20px;
 }
 
 .admin-logo {
@@ -107,6 +107,11 @@ body {
 
 .admin-nav a:hover {
     text-decoration: underline;
+}
+
+.admin-user {
+    margin-left: auto;
+    font-size: 0.9em;
 }
 
 .admin-footer {

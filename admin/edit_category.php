@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
-require_once '../../config/db.php';
+require_once '../config/db.php';
 
 if (!isset($_GET['id'])) {
     header('Location: manage_categories.php');
@@ -48,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Edit Category</title>
-    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../assets/css/admindashboard.css">
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/header.php'; ?>
+    <?php require_once __DIR__ . '/includes/header.php'; ?>
         <div class="admin-container">
         <?php require_once __DIR__ . '/sidebar.php'; ?>
             <main class="content">
@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </main>
     </div>
-    <?php require_once __DIR__ . '/footer.php'; ?>
+    <?php require_once __DIR__ . '/includes/footer.php'; ?>
 </body>
 
 </html>

@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
-require_once '../../config/db.php';
+require_once '../config/db.php';
 
 if (isset($_GET['id'])) {
     $category_id = (int) $_GET['id'];

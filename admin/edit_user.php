@@ -4,7 +4,7 @@ if (!isset($_SESSION['admin_id'])) {
     header('Location: admin_login.php');
     exit();
 }
-require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../config/db.php';
 
 // Fetch available roles
 $roles = [];
@@ -72,11 +72,11 @@ if ($stmt) {
 <head>
     <meta charset="UTF-8">
     <title>Edit User</title>
-    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../assets/css/admindashboard.css">
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/header.php'; ?>
+    <?php require_once __DIR__ . '/includes/header.php'; ?>
         <div class="admin-container">
         <?php require_once __DIR__ . '/sidebar.php'; ?>
             <main class="content">
@@ -106,7 +106,7 @@ if ($stmt) {
             </form>
         </main>
     </div>
-    <?php require_once __DIR__ . '/footer.php'; ?>
+    <?php require_once __DIR__ . '/includes/footer.php'; ?>
 </body>
 
 </html>

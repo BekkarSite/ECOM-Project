@@ -5,7 +5,7 @@ if (!isset($_SESSION['admin_id'])) {
     header('Location: admin_login.php');
     exit();
 }
-include('../../config/db.php');
+include('../config/db.php');
 
 // Handle adding category
 $message = '';
@@ -30,12 +30,12 @@ $categories = $conn->query("SELECT id, name FROM categories");
 <head>
     <meta charset="UTF-8">
     <title>Manage Categories</title>
-    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../assets/css/admindashboard.css">
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/header.php'; ?>
-    <div class="admin-container">
+    <?php require_once __DIR__ . '/includes/header.php'; ?>
+        <div class="admin-container">
         <?php require_once __DIR__ . '/sidebar.php'; ?>
         <main class="content">
             <h2>Manage Categories</h2>
@@ -60,7 +60,7 @@ $categories = $conn->query("SELECT id, name FROM categories");
             </ul>
         </main>
     </div>
-    <?php require_once __DIR__ . '/footer.php'; ?>
+    <?php require_once __DIR__ . '/includes/footer.php'; ?>
 </body>
 
 </html>

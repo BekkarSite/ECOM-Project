@@ -4,7 +4,7 @@ if (!isset($_SESSION['admin_id'])) {
     header('Location: admin_login.php');
     exit();
 }
-require_once '../../config/db.php';
+require_once '../config/db.php';
 
 $message = '';
 
@@ -50,12 +50,12 @@ $categories = $conn->query('SELECT id, name FROM categories');
 <head>
     <meta charset="UTF-8" />
     <title>Manage Products</title>
-    <link rel="stylesheet" href="../../assets/css/admindashboard.css" />
-    <link rel="stylesheet" href="../../assets/css/manageproductsstyle.css" />
+    <link rel="stylesheet" href="../assets/css/admindashboard.css" />
+    <link rel="stylesheet" href="../assets/css/manageproductsstyle.css" />
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/header.php'; ?>
+    <?php require_once __DIR__ . '/includes/header.php'; ?>
         <div class="admin-container">
         <?php require_once __DIR__ . '/sidebar.php'; ?>
             <main class="content">
@@ -116,7 +116,7 @@ $categories = $conn->query('SELECT id, name FROM categories');
             </div>
         </main>
     </div>
-    <?php require_once __DIR__ . '/footer.php'; ?>
+    <?php require_once __DIR__ . '/includes/footer.php'; ?>
 </body>
 
 </html>

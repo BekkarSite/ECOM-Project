@@ -4,7 +4,7 @@ if (!isset($_SESSION['admin_id'])) {
     header('Location: admin_login.php');
     exit();
 }
-require_once __DIR__ . '/../../config/db.php';
+require_once __DIR__ . '/../config/db.php';
 
 // Handle add/edit role
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -95,12 +95,12 @@ if ($result) {
 <head>
     <meta charset="UTF-8">
     <title>User Role Management</title>
-    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../assets/css/admindashboard.css">
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/header.php'; ?>
-    <div class="admin-container">
+    <?php require_once __DIR__ . '/includes/header.php'; ?>
+        <div class="admin-container">
         <?php require_once __DIR__ . '/sidebar.php'; ?>
         <main class="content">
             <h1>User Role Management</h1>
@@ -144,7 +144,7 @@ if ($result) {
             </section>
         </main>
     </div>
-    <?php require_once __DIR__ . '/footer.php'; ?>
+    <?php require_once __DIR__ . '/includes/footer.php'; ?>
 </body>
 
 </html>

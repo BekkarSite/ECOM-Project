@@ -8,7 +8,7 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 // Include the database connection to fetch summary statistics
-include('../../config/db.php');
+include('../config/db.php');
 
 // Helper function to fetch counts from a table
 function getCount(mysqli $conn, string $table): int
@@ -33,12 +33,12 @@ $categoryCount = getCount($conn, 'categories');
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../assets/css/admindashboard.css">
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/header.php'; ?>
-    <div class="admin-container">
+    <?php require_once __DIR__ . '/includes/header.php'; ?>
+        <div class="admin-container">
         <?php include 'sidebar.php'; ?>
         <main class="content">
             <h1>Admin Dashboard</h1>
@@ -63,7 +63,7 @@ $categoryCount = getCount($conn, 'categories');
             </div>
         </main>
     </div>
-    <?php require_once __DIR__ . '/footer.php'; ?>
+    <?php require_once __DIR__ . '/includes/footer.php'; ?>
 </body>
 
 </html>

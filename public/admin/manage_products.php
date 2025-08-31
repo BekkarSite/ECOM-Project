@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_product'])) {
     }
 }
 
-$products = $conn->query('SELECT id, name, price, stock FROM products');
+$products = $conn->query('SELECT p.id, p.name, p.price, p.stock, c.name AS category_name FROM products p LEFT JOIN categories c ON p.category_id = c.id');
 $categories = $conn->query('SELECT id, name FROM categories');
 ?>
 <!DOCTYPE html>
@@ -92,6 +92,7 @@ $categories = $conn->query('SELECT id, name FROM categories');
                 <table>
                     <tr>
                         <th>Product Name</th>
+                        <th>Category</th>
                         <th>Price</th>
                         <th>Stock</th>
                         <th>Action</th>
@@ -100,6 +101,7 @@ $categories = $conn->query('SELECT id, name FROM categories');
                         <?php while ($product = $products->fetch_assoc()): ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td><?php echo htmlspecialchars($product['category_name'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><?php echo htmlspecialchars($product['price'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td><?php echo htmlspecialchars($product['stock'], ENT_QUOTES, 'UTF-8'); ?></td>
                                 <td>

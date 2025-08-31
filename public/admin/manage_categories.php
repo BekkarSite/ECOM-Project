@@ -50,7 +50,11 @@ $categories = $conn->query("SELECT id, name FROM categories");
             <h3>Existing Categories</h3>
             <ul>
                 <?php while ($row = $categories->fetch_assoc()): ?>
-                    <li><?= htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?></li>
+                    <li>
+                        <?= htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?>
+                        <a href="edit_category.php?id=<?= $row['id']; ?>">Edit</a>
+                        <a href="delete_category.php?id=<?= $row['id']; ?>" onclick="return confirm('Delete this category?');">Delete</a>
+                    </li>
                 <?php endwhile; ?>
             </ul>
         </main>

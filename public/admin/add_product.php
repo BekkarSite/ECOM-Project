@@ -8,36 +8,58 @@ if (!isset($_SESSION['admin_id'])) {
 require_once '../../config/db.php';
 
 $message = '';
+$errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = trim($_POST['name']);
     $description = trim($_POST['description']);
-    $price = (float) $_POST['price'];
-    $category_id = (int) $_POST['category_id'];
-    $stock = (int) $_POST['stock'];
+    $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
+    $category_id = filter_input(INPUT_POST, 'category_id', FILTER_VALIDATE_INT);
+    $stock = filter_input(INPUT_POST, 'stock', FILTER_VALIDATE_INT);
     $image = '';
 
-    if (!empty($_FILES['image']['name'])) {
-        $image = basename($_FILES['image']['name']);
-        $target_dir = "../../assets/images/";
-        $target_file = $target_dir . $image;
-        move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+    if ($price === false || $price < 0) {
+        $errors[] = 'Please enter a valid price.';
+    }
+    if ($stock === false || $stock < 0) {
+        $errors[] = 'Stock must be zero or a positive integer.';
     }
 
-    $stmt = $conn->prepare(
-        'INSERT INTO products (name, description, price, category_id, image, stock)'
-            . ' VALUES (?, ?, ?, ?, ?, ?)'
-    );
-
-    if ($stmt) {
-        $stmt->bind_param('ssdisi', $name, $description, $price, $category_id, $image, $stock);
-        if ($stmt->execute()) {
-            $message = 'Product added successfully!';
+    if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+        $tmp_name = $_FILES['image']['tmp_name'];
+        $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+        $allowed_exts = ['jpg', 'jpeg', 'png', 'gif'];
+        if (in_array($ext, $allowed_exts) && getimagesize($tmp_name)) {
+            $image = uniqid('prod_', true) . '.' . $ext;
+            $target_dir = '../../assets/images/';
+            $target_file = $target_dir . $image;
+            if (!move_uploaded_file($tmp_name, $target_file)) {
+                $errors[] = 'Failed to upload image.';
+            }
         } else {
-            $message = 'Error adding product.';
+            $errors[] = 'Invalid image format.';
         }
-        $stmt->close();
     } else {
-        $message = 'Failed to prepare statement.';
+        $errors[] = 'Image is required.';
+    }
+
+    if (empty($errors)) {
+        $stmt = $conn->prepare(
+            'INSERT INTO products (name, description, price, category_id, image, stock) VALUES (?, ?, ?, ?, ?, ?)'
+        );
+
+        if ($stmt) {
+            $stmt->bind_param('ssdisi', $name, $description, $price, $category_id, $image, $stock);
+            if ($stmt->execute()) {
+                $message = 'Product added successfully!';
+            } else {
+                $message = 'Error adding product.';
+            }
+            $stmt->close();
+        } else {
+            $message = 'Failed to prepare statement.';
+        }
+    } else {
+        $message = implode(' ', $errors);
     }
 }
 
@@ -67,7 +89,7 @@ $categories = $conn->query('SELECT id, name FROM categories');
                 <label>Description:</label><br>
                 <textarea name="description" required></textarea><br>
                 <label>Price:</label><br>
-                <input type="number" step="0.01" name="price" required><br>
+                <input type="number" step="0.01" name="price" min="0" required><br>
                 <label>Category:</label><br>
                 <select name="category_id" required>
                     <?php while ($row = $categories->fetch_assoc()): ?>
@@ -77,7 +99,7 @@ $categories = $conn->query('SELECT id, name FROM categories');
                 <label>Image:</label><br>
                 <input type="file" name="image" required><br>
                 <label>Stock:</label><br>
-                <input type="number" name="stock" required><br>
+                <input type="number" name="stock" min="0" required><br>
                 <button type="submit">Add Product</button>
             </form>
         </main>

@@ -1,36 +1,58 @@
 <?php
 session_start();
-include('../../config/db.php'); // Include the database connection file
+require_once __DIR__ . '/../../config/db.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email    = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
 
-    // Check if user exists in the database and is an admin
-    $sql = "SELECT * FROM users WHERE email = '$email' AND role = 'admin'";
-    $result = $conn->query($sql);
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
-
-        // Verify the password entered by the user with the stored hash
-        if (password_verify($password, $user['password'])) {
-            // If the password is correct, start the session and log the user in
-            $_SESSION['admin_id'] = $user['id'];
-            $_SESSION['email'] = $user['email'];
-            header('Location: dashboard.php'); // Redirect to the admin panel after login        } else {
-            $error = "Invalid credentials!";
+    $stmt = $conn->prepare("SELECT id, email, password FROM users WHERE email = ? AND role = 'admin'");
+    if ($stmt) {
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result && $result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['admin_id'] = $user['id'];
+                $_SESSION['email'] = $user['email'];
+                header('Location: dashboard.php');
+                exit;
+            } else {
+                $error = 'Invalid credentials!';
+            }
+        } else {
+            $error = 'No admin user found with that email!';
         }
+        $stmt->close();
     } else {
-        $error = "No admin user found with that email!";
+        $error = 'Database error.';
     }
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<form method="POST">
-    <label>Email:</label><br>
-    <input type="email" name="email" required><br>
-    <label>Password:</label><br>
-    <input type="password" name="password" required><br>
-    <button type="submit">Login</button>
-    <?php if (isset($error)) echo "<p>$error</p>"; ?>
-</form>
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="../../assets/css/loginstyle.css">
+</head>
+
+<body>
+    <main class="login-wrapper">
+        <form method="POST" class="login-form">
+            <h2>Admin Login</h2>
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+            <?php if (isset($error)): ?>
+                <p class="error"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
+            <?php endif; ?>
+            <button type="submit">Login</button>
+        </form>
+    </main>
+</body>
+
+</html>

@@ -7,10 +7,13 @@ if (!isset($_SESSION['admin_id'])) {
 require_once __DIR__ . '/../../config/db.php';
 
 $id = intval($_GET['id'] ?? 0);
-if ($id > 0) {
-    $stmt = $conn->prepare('DELETE FROM users WHERE id = ?');
+$action = $_GET['action'] ?? '';
+
+if ($id > 0 && in_array($action, ['ban', 'unban'])) {
+    $is_banned = $action === 'ban' ? 1 : 0;
+    $stmt = $conn->prepare('UPDATE users SET is_banned = ? WHERE id = ?');
     if ($stmt) {
-        $stmt->bind_param('i', $id);
+        $stmt->bind_param('ii', $is_banned, $id);
         $stmt->execute();
         $stmt->close();
     }

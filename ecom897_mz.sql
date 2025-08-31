@@ -139,6 +139,7 @@ CREATE TABLE `users` (
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('customer','admin') DEFAULT 'customer',
+  `is_banned` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -146,11 +147,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `role`, `created_at`) VALUES
-(1, 'user@example.com', 'password123', 'customer', '2025-08-28 17:54:44'),
-(2, 'admin@example.com', '$2y$12$J.8/08UvHAgt4HpIzYm8N.mBvye/EgdSGzfgBnasu1NyH93CNjRTC', 'admin', '2025-08-29 15:00:00'),
-(4, 'user1@example.com', '$2y$10$IEV8zQv7aRqZVJOMqy0qluRRNr4vYsvPIcRM3q7JRSMVMzCo/cEIC', 'customer', '2025-08-29 10:45:06'),
-(5, 'user@gmail.com', '$2y$10$IEV8zQv7aRqZVJOMqy0qluRRNr4vYsvPIcRM3q7JRSMVMzCo/cEIC', 'customer', '2025-08-29 12:19:27');
+INSERT INTO `users` (`id`, `email`, `password`, `role`, `is_banned`, `created_at`) VALUES
+(1, 'user@example.com', 'password123', 'customer', 0, '2025-08-28 17:54:44'),
+(2, 'admin@example.com', '$2y$12$J.8/08UvHAgt4HpIzYm8N.mBvye/EgdSGzfgBnasu1NyH93CNjRTC', 'admin', 0, '2025-08-29 15:00:00'),
+(4, 'user1@example.com', '$2y$10$IEV8zQv7aRqZVJOMqy0qluRRNr4vYsvPIcRM3q7JRSMVMzCo/cEIC', 'customer', 0, '2025-08-29 10:45:06'),
+(5, 'user@gmail.com', '$2y$10$IEV8zQv7aRqZVJOMqy0qluRRNr4vYsvPIcRM3q7JRSMVMzCo/cEIC', 'customer', 0, '2025-08-29 12:19:27');
 
 
 -- --------------------------------------------------------

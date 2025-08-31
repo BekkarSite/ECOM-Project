@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
+    <?php include 'header.php'; ?>
     <div class="admin-container">
         <?php include 'sidebar.php'; ?>
         <main class="content">
@@ -66,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </main>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>

@@ -7,12 +7,15 @@ if (!isset($_SESSION['admin_id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Order Management</title>
     <link rel="stylesheet" href="../../assets/css/admindashboard.css">
 </head>
+
 <body>
+    <?php include 'header.php'; ?>
     <div class="admin-container">
         <?php include 'sidebar.php'; ?>
         <main class="content">
@@ -20,5 +23,7 @@ if (!isset($_SESSION['admin_id'])) {
             <p>Placeholder page for handling orders.</p>
         </main>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
+
 </html>

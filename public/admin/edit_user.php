@@ -72,10 +72,11 @@ if ($stmt) {
 <head>
     <meta charset="UTF-8">
     <title>Edit User</title>
-   <link rel="stylesheet" href="../../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../../assets/css/admindashboard.css">
 </head>
 
 <body>
+    <?php include 'header.php'; ?>
     <div class="admin-container">
         <?php include 'sidebar.php'; ?>
         <main class="content">
@@ -87,14 +88,14 @@ if ($stmt) {
                 <label for="password">New Password (leave blank to keep current)</label>
                 <input type="password" id="password" name="password">
 
-                  <label for="role">Role</label>
-                  <select id="role" name="role">
-                      <?php foreach ($roles as $r): ?>
-                          <option value="<?= htmlspecialchars($r, ENT_QUOTES, 'UTF-8'); ?>" <?php if ($role === $r) echo 'selected'; ?>>
-                              <?= htmlspecialchars(ucfirst($r), ENT_QUOTES, 'UTF-8'); ?>
-                          </option>
-                      <?php endforeach; ?>
-                  </select>
+                <label for="role">Role</label>
+                <select id="role" name="role">
+                    <?php foreach ($roles as $r): ?>
+                        <option value="<?= htmlspecialchars($r, ENT_QUOTES, 'UTF-8'); ?>" <?php if ($role === $r) echo 'selected'; ?>>
+                            <?= htmlspecialchars(ucfirst($r), ENT_QUOTES, 'UTF-8'); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
 
                 <label>
                     <input type="checkbox" name="is_banned" value="1" <?php if ($is_banned) echo 'checked'; ?>>
@@ -105,6 +106,7 @@ if ($stmt) {
             </form>
         </main>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>

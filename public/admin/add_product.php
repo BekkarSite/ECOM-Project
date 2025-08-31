@@ -76,6 +76,7 @@ $categories = $conn->query('SELECT id, name FROM categories');
 </head>
 
 <body>
+    <?php include 'header.php'; ?>
     <div class="admin-container">
         <?php include 'sidebar.php'; ?>
         <main class="content">
@@ -106,6 +107,7 @@ $categories = $conn->query('SELECT id, name FROM categories');
             </div>
         </main>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>

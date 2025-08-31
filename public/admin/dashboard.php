@@ -37,9 +37,10 @@ $categoryCount = getCount($conn, 'categories');
 </head>
 
 <body>
+    <?php include 'header.php'; ?>
     <div class="admin-container">
         <?php include 'sidebar.php'; ?>
-        <div class="admin-content">
+        <main class="content">
             <h1>Admin Dashboard</h1>
             <p>Welcome, <?= htmlspecialchars($_SESSION['email'], ENT_QUOTES, 'UTF-8'); ?>!</p>
             <div class="dashboard-stats">
@@ -60,10 +61,9 @@ $categoryCount = getCount($conn, 'categories');
                     <span class="stat-label">Users</span>
                 </div>
             </div>
-                </div>
-            </div>
         </main>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 
 </html>

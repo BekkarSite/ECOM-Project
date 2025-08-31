@@ -1,0 +1,42 @@
+/* assets/css/addproductstyle.css */
+.add-product-wrapper {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.add-product-wrapper h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.add-product-wrapper .message {
+    margin-bottom: 10px;
+    color: #d00;
+}
+
+.add-product-wrapper form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-product-wrapper form label {
+    font-weight: bold;
+}
+
+.add-product-wrapper form input,
+.add-product-wrapper form textarea,
+.add-product-wrapper form select {
+    padding: 8px;
+}
+
+.add-product-wrapper form button {
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* End of addproductstyle.css */

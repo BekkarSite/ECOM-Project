@@ -72,36 +72,38 @@ $categories = $conn->query('SELECT id, name FROM categories');
     <meta charset="UTF-8">
     <title>Add Product</title>
     <link rel="stylesheet" href="../../assets/css/admindashboard.css">
-    <link rel="stylesheet" href="../../assets/css/manageproductsstyle.css">
+    <link rel="stylesheet" href="../../assets/css/addproductstyle.css">
 </head>
 
 <body>
     <div class="admin-container">
         <?php include 'sidebar.php'; ?>
         <main class="content">
-            <h2>Add Product</h2>
-            <?php if (!empty($message)): ?>
-                <p><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
-            <?php endif; ?>
-            <form method="POST" enctype="multipart/form-data">
-                <label>Product Name:</label><br>
-                <input type="text" name="name" required><br>
-                <label>Description:</label><br>
-                <textarea name="description" required></textarea><br>
-                <label>Price:</label><br>
-                <input type="number" step="0.01" name="price" min="0" required><br>
-                <label>Category:</label><br>
-                <select name="category_id" required>
-                    <?php while ($row = $categories->fetch_assoc()): ?>
-                        <option value="<?= $row['id']; ?>"><?= htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?></option>
-                    <?php endwhile; ?>
-                </select><br>
-                <label>Image:</label><br>
-                <input type="file" name="image" required><br>
-                <label>Stock:</label><br>
-                <input type="number" name="stock" min="0" required><br>
-                <button type="submit">Add Product</button>
-            </form>
+            <div class="add-product-wrapper">
+                <h2>Add Product</h2>
+                <?php if (!empty($message)): ?>
+                    <p class="message"><?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8'); ?></p>
+                <?php endif; ?>
+                <form method="POST" enctype="multipart/form-data">
+                    <label>Product Name:</label>
+                    <input type="text" name="name" required>
+                    <label>Description:</label>
+                    <textarea name="description" required></textarea>
+                    <label>Price:</label>
+                    <input type="number" step="0.01" name="price" min="0" required>
+                    <label>Category:</label>
+                    <select name="category_id" required>
+                        <?php while ($row = $categories->fetch_assoc()): ?>
+                            <option value="<?= $row['id']; ?>"><?= htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?></option>
+                        <?php endwhile; ?>
+                    </select>
+                    <label>Image:</label>
+                    <input type="file" name="image" required>
+                    <label>Stock:</label>
+                    <input type="number" name="stock" min="0" required>
+                    <button type="submit">Add Product</button>
+                </form>
+            </div>
         </main>
     </div>
 </body>

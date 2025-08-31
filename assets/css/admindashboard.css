@@ -81,9 +81,32 @@ body {
     padding: 15px 20px;
 }
 
-.admin-header h1 {
-    margin: 0;
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-logo {
     font-size: 1.5em;
+    font-weight: bold;
+}
+
+.admin-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.admin-nav a:hover {
+    text-decoration: underline;
 }
 
 .admin-footer {

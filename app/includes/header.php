@@ -1,9 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
 <!-- header.php -->
 
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/headerstyle.css">
-    <script>
+    <link rel="stylesheet" href="../assets/css/footerstyle.css">
+<script>
         // Hide the loader once the page has fully loaded
         window.addEventListener('load', function() {
             var loader = document.getElementById('loader');
@@ -14,11 +17,11 @@
     </script>
 </head>
 
+<body>
 <div id="loader">
     <img src="../assets/images/loading.gif" alt="Loading...">
 </div>
 
-</head>
 <header>
     <div class="logo-container">
         <a href="index.php" class="logo">

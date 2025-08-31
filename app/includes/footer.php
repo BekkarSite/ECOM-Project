@@ -1,10 +1,4 @@
 <!-- footer.php -->
-<head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/footerstyle.css">
-
-</head>
-<!-- footer.php -->
 <footer class="footer">
     <div class="footer-container">
         <!-- Logo Section with Phone and Address -->
@@ -62,9 +56,9 @@
         <div class="payment-methods">
             <h5>We Accept</h5>
             <ul>
-                <li><img src="assets/images/payment/paypal.png" alt="PayPal"></li>
-                <li><img src="assets/images/payment/visa.png" alt="Visa"></li>
-                <li><img src="assets/images/payment/mastercard.png" alt="MasterCard"></li>
+                <li><img src="../assets/images/payment/paypal.png" alt="PayPal"></li>
+                <li><img src="../assets/images/payment/visa.png" alt="Visa"></li>
+                <li><img src="../assets/images/payment/mastercard.png" alt="MasterCard"></li>
             </ul>
         </div>
         <div class="site-credits">
@@ -72,3 +66,6 @@
         </div>
     </div>
 </footer>
+
+</body>
+</html>

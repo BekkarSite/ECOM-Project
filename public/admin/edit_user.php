@@ -76,10 +76,10 @@ if ($stmt) {
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
-    <div class="admin-container">
-        <?php include 'sidebar.php'; ?>
-        <main class="content">
+    <?php require_once __DIR__ . '/header.php'; ?>
+        <div class="admin-container">
+        <?php require_once __DIR__ . '/sidebar.php'; ?>
+            <main class="content">
             <h1>Edit User</h1>
             <form method="POST">
                 <label for="email">Email</label>
@@ -106,7 +106,7 @@ if ($stmt) {
             </form>
         </main>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php require_once __DIR__ . '/footer.php'; ?>
 </body>
 
 </html>

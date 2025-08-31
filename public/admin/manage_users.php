@@ -62,9 +62,9 @@ if ($search !== '') {
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php require_once __DIR__ . '/header.php'; ?>
     <div class="admin-container">
-        <?php include 'sidebar.php'; ?>
+        <?php require_once __DIR__ . '/sidebar.php'; ?>
         <main class="content">
             <div class="manage-users-wrapper">
                 <h1>Manage Users</h1>
@@ -115,7 +115,7 @@ if ($search !== '') {
             </div>
         </main>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php require_once __DIR__ . '/footer.php'; ?>
 </body>
 
 </html>

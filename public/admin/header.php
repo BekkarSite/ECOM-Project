@@ -1,6 +1,4 @@
-<?php
-// Shared header for admin pages
-?>
+<!-- Shared header for admin pages -->
 <header class="admin-header">
     <div class="admin-logo">Admin Panel</div>
     <nav class="admin-nav">

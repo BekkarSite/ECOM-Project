@@ -17,13 +17,13 @@ if (!isset($_SESSION['admin_id'])) {
 <body>
     <?php include 'header.php'; ?>
     <div class="admin-container">
-        <?php include 'sidebar.php'; ?>
+        <?php require_once __DIR__ . '/sidebar.php'; ?>
         <main class="content">
             <h1>Payment Methods</h1>
             <p>Placeholder page for managing payment options.</p>
         </main>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php require_once __DIR__ . '/footer.php'; ?>
 </body>
 
 </html>

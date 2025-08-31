@@ -37,7 +37,7 @@ $categoryCount = getCount($conn, 'categories');
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php require_once __DIR__ . '/header.php'; ?>
     <div class="admin-container">
         <?php include 'sidebar.php'; ?>
         <main class="content">
@@ -63,7 +63,7 @@ $categoryCount = getCount($conn, 'categories');
             </div>
         </main>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php require_once __DIR__ . '/footer.php'; ?>
 </body>
 
 </html>

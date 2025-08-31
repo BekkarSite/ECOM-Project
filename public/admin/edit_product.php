@@ -55,9 +55,9 @@ $categories = $conn->query("SELECT id, name FROM categories");
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php require_once __DIR__ . '/header.php'; ?>
     <div class="admin-container">
-        <?php include 'sidebar.php'; ?>
+        <?php require_once __DIR__ . '/sidebar.php'; ?>
         <main class="content">
             <h2>Edit Product</h2>
             <?php if (!empty($message)): ?>
@@ -86,7 +86,7 @@ $categories = $conn->query("SELECT id, name FROM categories");
             </form>
         </main>
     </div>
-    <?php include 'footer.php'; ?>
+    <?php require_once __DIR__ . '/footer.php'; ?>
 </body>
 
 </html>

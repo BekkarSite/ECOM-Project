@@ -152,6 +152,27 @@ INSERT INTO `users` (`id`, `email`, `password`, `role`, `created_at`) VALUES
 (4, 'user1@example.com', '$2y$10$IEV8zQv7aRqZVJOMqy0qluRRNr4vYsvPIcRM3q7JRSMVMzCo/cEIC', 'customer', '2025-08-29 10:45:06'),
 (5, 'user@gmail.com', '$2y$10$IEV8zQv7aRqZVJOMqy0qluRRNr4vYsvPIcRM3q7JRSMVMzCo/cEIC', 'customer', '2025-08-29 12:19:27');
 
+
+-- --------------------------------------------------------
+
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `name`, `value`) VALUES
+(1, 'registration_paused', '0');
+
+-- --------------------------------------------------------
+
 --
 -- Indexes for dumped tables
 --
@@ -199,6 +220,11 @@ ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
+-- Indexes for table `settings`
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
 --
 -- AUTO_INCREMENT for dumped tables
 --
@@ -234,6 +260,11 @@ ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`

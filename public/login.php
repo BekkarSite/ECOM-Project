@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../app/includes/header.php';
+require_once __DIR__ . '/../app/includes/public/public_header.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<link rel="stylesheet" href="../assets/css/loginstyle.css">
+<link rel="stylesheet" href="../assets/css/custom/loginstyle.css">
 
 <main class="login-wrapper">
     <form method="POST" class="login-form">
@@ -49,4 +49,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </main>
 
-<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/public/public_footer.php'; ?>

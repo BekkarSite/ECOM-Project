@@ -33,12 +33,12 @@ $categoryCount = getCount($conn, 'categories');
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/includes/header.php'; ?>
-        <div class="admin-container">
+    <?php require_once __DIR__ . '/../app/includes/admin/admin_header.php'; ?>
+    <div class="admin-container">
         <?php include 'sidebar.php'; ?>
         <main class="content">
             <h1>Admin Dashboard</h1>
@@ -63,7 +63,7 @@ $categoryCount = getCount($conn, 'categories');
             </div>
         </main>
     </div>
-    <?php require_once __DIR__ . '/includes/footer.php'; ?>
+    <?php require_once __DIR__ . '/../app/includes/admin/admin_footer.php'; ?>
 </body>
 
 </html>

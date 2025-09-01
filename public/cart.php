@@ -2,7 +2,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../app/includes/header.php';
+require_once __DIR__ . '/../app/includes/public/public_header.php';
 
 $cart = $_SESSION['cart'] ?? [];
 
@@ -27,13 +27,13 @@ if (isset($_GET['action'])) {
         case 'empty':
             $cart = [];
             break;
-        }
-
-            $_SESSION['cart'] = $cart;
     }
+
+    $_SESSION['cart'] = $cart;
+}
 ?>
 
-<link rel="stylesheet" href="../assets/css/cartstyle.css">
+<link rel="stylesheet" href="../assets/css/custom/cartstyle.css">
 
 <main class="cart">
     <h1>Your Cart</h1>
@@ -95,4 +95,4 @@ if (isset($_GET['action'])) {
     <?php endif; ?>
 </main>
 
-<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/public/public_footer.php'; ?>

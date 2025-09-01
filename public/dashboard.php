@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../app/includes/header.php';
+require_once __DIR__ . '/../app/includes/public/public_header.php';
 
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
@@ -32,7 +32,7 @@ $orderStmt->bind_param('i', $user_id);
 $orderStmt->execute();
 $orders = $orderStmt->get_result();
 ?>
-<link rel="stylesheet" href="../assets/css/dashboardstyle.css">
+<link rel="stylesheet" href="../assets/css/custom/dashboardstyle.css">
 
 <main class="dashboard-wrapper">
     <section class="profile">
@@ -77,4 +77,4 @@ $orders = $orderStmt->get_result();
     </section>
 </main>
 
-<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/public/public_footer.php'; ?>

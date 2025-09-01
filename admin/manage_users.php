@@ -57,12 +57,12 @@ if ($search !== '') {
 <head>
     <meta charset="UTF-8">
     <title>Manage Users</title>
-    <link rel="stylesheet" href="../assets/css/admindashboard.css">
-    <link rel="stylesheet" href="../assets/css/manageusersstyle.css">
+    <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
+    <link rel="stylesheet" href="../assets/css/custom/manageusersstyle.css">
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/includes/header.php'; ?>
+    <?php require_once __DIR__ . '/../app/includes/admin/admin_header.php'; ?>
     <div class="admin-container">
         <?php require_once __DIR__ . '/sidebar.php'; ?>
         <main class="content">
@@ -115,7 +115,7 @@ if ($search !== '') {
             </div>
         </main>
     </div>
-    <?php require_once __DIR__ . '/includes/footer.php'; ?>
+    <?php require_once __DIR__ . '/../app/includes/admin/admin_footer.php'; ?>
 </body>
 
 </html>

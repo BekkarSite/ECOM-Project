@@ -50,13 +50,13 @@ $categories = $conn->query("SELECT id, name FROM categories");
 <head>
     <meta charset="UTF-8">
     <title>Edit Product</title>
-    <link rel="stylesheet" href="../assets/css/admindashboard.css">
-    <link rel="stylesheet" href="../assets/css/manageproductsstyle.css">
+    <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
+    <link rel="stylesheet" href="../assets/css/custom/manageproductsstyle.css">
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/includes/header.php'; ?>
-        <div class="admin-container">
+    <?php require_once __DIR__ . '/../app/includes/admin/admin_header.php'; ?>
+    <div class="admin-container">
         <?php require_once __DIR__ . '/sidebar.php'; ?>
         <main class="content">
             <h2>Edit Product</h2>
@@ -86,7 +86,7 @@ $categories = $conn->query("SELECT id, name FROM categories");
             </form>
         </main>
     </div>
-    <?php require_once __DIR__ . '/includes/footer.php'; ?>
+    <?php require_once __DIR__ . '/../app/includes/admin/admin_footer.php'; ?>
 </body>
 
 </html>

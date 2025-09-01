@@ -2,7 +2,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../app/includes/header.php';
+require_once __DIR__ . '/../app/includes/public/public_header.php';
 
 // Fetch categories for filter
 $categories = $conn->query("SELECT id, name FROM categories");
@@ -29,23 +29,24 @@ if ($stmt && $stmt->execute()) {
         <ul>
             <li><a href="products.php">All</a></li>
             <?php while ($cat = $categories->fetch_assoc()): ?>
-            <li><a href="products.php?category_id=<?= htmlspecialchars($cat['id']) ?>"><?= htmlspecialchars($cat['name']) ?></a></li>
+                <li><a href="products.php?category_id=<?= htmlspecialchars($cat['id']) ?>"><?= htmlspecialchars($cat['name']) ?></a></li>
             <?php endwhile; ?>
         </ul>
     </nav>
     <section id="product-list">
         <?php if ($products): foreach ($products as $product): ?>
-            <div class="product">
-                <a href="product.php?id=<?= htmlspecialchars($product['id']) ?>">
-                    <img src="/assets/images/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
-                    <h3><?= htmlspecialchars($product['name']) ?></h3>
-                </a>
-                <p><?= htmlspecialchars(number_format((float)$product['price'], 2)) ?> PKR</p>
-                <a href="add_to_cart.php?product_id=<?= htmlspecialchars($product['id']) ?>&quantity=1">Add to Cart</a>
-            </div>
-        <?php endforeach; else: ?>
+                <div class="product">
+                    <a href="product.php?id=<?= htmlspecialchars($product['id']) ?>">
+                        <img src="../assets/images/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
+                        <h3><?= htmlspecialchars($product['name']) ?></h3>
+                    </a>
+                    <p><?= htmlspecialchars(number_format((float)$product['price'], 2)) ?> PKR</p>
+                    <a href="add_to_cart.php?product_id=<?= htmlspecialchars($product['id']) ?>&quantity=1">Add to Cart</a>
+                </div>
+            <?php endforeach;
+        else: ?>
             <p>No products found.</p>
         <?php endif; ?>
     </section>
 </main>
-<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/public/public_footer.php'; ?>

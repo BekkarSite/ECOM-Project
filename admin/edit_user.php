@@ -72,14 +72,14 @@ if ($stmt) {
 <head>
     <meta charset="UTF-8">
     <title>Edit User</title>
-    <link rel="stylesheet" href="../assets/css/admindashboard.css">
+    <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
 </head>
 
 <body>
-    <?php require_once __DIR__ . '/includes/header.php'; ?>
-        <div class="admin-container">
+    <?php require_once __DIR__ . '/../app/includes/admin/admin_header.php'; ?>
+    <div class="admin-container">
         <?php require_once __DIR__ . '/sidebar.php'; ?>
-            <main class="content">
+        <main class="content">
             <h1>Edit User</h1>
             <form method="POST">
                 <label for="email">Email</label>
@@ -106,7 +106,7 @@ if ($stmt) {
             </form>
         </main>
     </div>
-    <?php require_once __DIR__ . '/includes/footer.php'; ?>
+    <?php require_once __DIR__ . '/../app/includes/admin/admin_footer.php'; ?>
 </body>
 
 </html>

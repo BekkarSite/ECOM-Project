@@ -6,7 +6,7 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-require_once __DIR__ . '/../app/includes/header.php';
+require_once __DIR__ . '/../app/includes/public/public_header.php';
 ?>
 
 <main>
@@ -20,4 +20,4 @@ require_once __DIR__ . '/../app/includes/header.php';
     </nav>
 </main>
 
-<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/public/public_footer.php'; ?>

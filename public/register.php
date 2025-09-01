@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../app/includes/header.php';
+require_once __DIR__ . '/../app/includes/public/public_header.php';
 
 $registrationPaused = false;
 $settingsStmt = $conn->prepare("SELECT value FROM settings WHERE name = 'registration_paused' LIMIT 1");
@@ -62,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-<link rel="stylesheet" href="../assets/css/registerstyle.css">
+<link rel="stylesheet" href="../assets/css/custom/registerstyle.css">
 <main class="register-wrapper">
     <?php if ($registrationPaused): ?>
         <p class="error">Registration is currently paused.</p>
@@ -82,4 +82,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     <?php endif; ?>
 </main>
-<?php require_once __DIR__ . '/../app/includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../app/includes/public/public_footer.php'; ?>

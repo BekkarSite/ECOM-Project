@@ -25,7 +25,7 @@
         <img src="../assets/images/loading.gif" alt="Loading...">
     </div>
 
-    <header class="navbar navbar-expand-lg navbar-light bg-light">
+    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a href="index.php" class="navbar-brand">
                 <img src="../assets/images/logo.png" alt="Logo">

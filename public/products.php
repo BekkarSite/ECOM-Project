@@ -41,7 +41,7 @@ if ($stmt && $stmt->execute()) {
                         <h3><?= htmlspecialchars($product['name']) ?></h3>
                     </a>
                     <p><?= htmlspecialchars(number_format((float)$product['price'], 2)) ?> PKR</p>
-                    <a href="add_to_cart.php?product_id=<?= htmlspecialchars($product['id']) ?>&quantity=1">Add to Cart</a>
+                    <a href="add_to_cart.php?product_id=<?= htmlspecialchars($product['id']) ?>&quantity=1" class="add-to-cart">Add to Cart</a>
                 </div>
             <?php endforeach;
         else: ?>

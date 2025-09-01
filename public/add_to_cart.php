@@ -20,8 +20,18 @@ if (isset($_GET['product_id'], $_GET['quantity'])) {
         $_SESSION['cart'][$product_id] = $quantity;
     }
 
-    // Redirect to the cart page and stop further execution
-    header('Location: cart.php');
+    // Determine if the request was made via AJAX
+    $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+        strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+
+    if ($isAjax) {
+        // Return the new cart count as JSON
+        header('Content-Type: application/json');
+        echo json_encode(['count' => array_sum($_SESSION['cart'])]);
+    } else {
+        // Redirect to the cart page for normal requests
+        header('Location: cart.php');
+    }
     exit();
 }
 ?>

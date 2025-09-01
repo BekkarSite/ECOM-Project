@@ -23,7 +23,7 @@ if (!isset($_GET['id'])) {
             <img src="../assets/images/<?= htmlspecialchars($product['image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>">
             <p><?= nl2br(htmlspecialchars($product['description'])) ?></p>
             <p><?= htmlspecialchars(number_format((float)$product['price'], 2)) ?> PKR</p>
-            <a href="add_to_cart.php?product_id=<?= $id ?>&quantity=1">Add to Cart</a>
+            <a href="add_to_cart.php?product_id=<?= $id ?>&quantity=1" class="add-to-cart">Add to Cart</a>
         </main>
 <?php
     }

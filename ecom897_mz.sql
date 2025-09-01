@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2025 at 03:03 PM
+-- Generation Time: Sep 01, 2025 at 07:06 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -144,8 +144,27 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`) VALUES
-(1, 'customer'),
-(2, 'admin');
+(2, 'admin'),
+(1, 'customer');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `name`, `value`) VALUES
+(1, 'registration_paused', '0');
 
 -- --------------------------------------------------------
 
@@ -167,31 +186,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `role`, `is_banned`, `created_at`) VALUES
-(1, 'user@example.com', 'password123', 'customer', 0, '2025-08-28 17:54:44'),
-(2, 'admin@example.com', '$2y$12$J.8/08UvHAgt4HpIzYm8N.mBvye/EgdSGzfgBnasu1NyH93CNjRTC', 'admin', 0, '2025-08-29 15:00:00'),
-(4, 'user1@example.com', '$2y$10$IEV8zQv7aRqZVJOMqy0qluRRNr4vYsvPIcRM3q7JRSMVMzCo/cEIC', 'customer', 0, '2025-08-29 10:45:06'),
-(5, 'user@gmail.com', '$2y$10$IEV8zQv7aRqZVJOMqy0qluRRNr4vYsvPIcRM3q7JRSMVMzCo/cEIC', 'customer', 0, '2025-08-29 12:19:27');
-
-
--- --------------------------------------------------------
-
--- Table structure for table `settings`
---
-
-CREATE TABLE `settings` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `settings`
---
-
-INSERT INTO `settings` (`id`, `name`, `value`) VALUES
-(1, 'registration_paused', '0');
-
--- --------------------------------------------------------
+(1, 'user@example.com', '$2y$10$c1b3uHk1Noo0e5DjI/sXYumFSjD6zNexjAkIsYAP23cQanKyJHaRu', 'customer', 0, '2025-08-28 17:54:44'),
+(2, 'admin@example.com', '$2y$12$J.8/08UvHAgt4HpIzYm8N.mBvye/EgdSGzfgBnasu1NyH93CNjRTC', 'admin', 0, '2025-08-29 15:00:00');
 
 --
 -- Indexes for dumped tables
@@ -241,16 +237,18 @@ ALTER TABLE `roles`
   ADD UNIQUE KEY `name` (`name`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
-
--- Indexes for table `settings`
-ALTER TABLE `settings`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -287,16 +285,18 @@ ALTER TABLE `products`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `settings`
---
-ALTER TABLE `settings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-  
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-  
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`

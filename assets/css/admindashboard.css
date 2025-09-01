@@ -84,7 +84,7 @@ body {
 .admin-header {
     display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
 }
 
 .admin-logo {
@@ -92,26 +92,31 @@ body {
     font-weight: bold;
 }
 
-.admin-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
-    margin: 0;
-    padding: 0;
+.admin-notifications {
+    margin-left: auto;
+    margin-right: 20px;
 }
 
-.admin-nav a {
+.admin-notifications a {
     color: #fff;
     text-decoration: none;
 }
 
-.admin-nav a:hover {
-    text-decoration: underline;
+.admin-user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.9em;
 }
 
-.admin-user {
-    margin-left: auto;
-    font-size: 0.9em;
+.admin-user-profile .admin-logout {
+    color: #fff;
+    text-decoration: none;
+    margin-top: 5px;
+}
+
+.admin-user-profile .admin-logout:hover {
+    text-decoration: underline;
 }
 
 .admin-footer {

@@ -5,10 +5,10 @@ require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../app/includes/public/public_header.php';
 ?>
 
-<main>
-    <h1>Welcome to Our eCommerce Site</h1>
-    <section id="featured-products">
-        <h2>Featured Products</h2>
+<main class="container my-5">
+    <h1 class="mb-4 text-center">Welcome to Our eCommerce Site</h1>
+    <section id="featured-products" class="row">
+        <h2 class="mb-4">Featured Products</h2>
         <?php
         $stmt = $conn->prepare("SELECT id, name, price, image FROM products LIMIT 4");
         if ($stmt && $stmt->execute()) {
@@ -20,11 +20,15 @@ require_once __DIR__ . '/../app/includes/public/public_header.php';
                     $price = htmlspecialchars(number_format((float)$row['price'], 2), ENT_QUOTES, 'UTF-8');
                     $image = htmlspecialchars($row['image'], ENT_QUOTES, 'UTF-8');
         ?>
-                    <div class="product">
-                        <img src="../assets/images/<?= $image ?>" alt="<?= $name ?>">
-                        <h3><?= $name ?></h3>
-                        <p><?= $price ?> PKR</p>
-                        <a href="add_to_cart.php?product_id=<?= $id ?>&quantity=1">Add to Cart</a>
+                    <div class="col-md-3 mb-4">
+                        <div class="card h-100">
+                            <img src="../assets/images/<?= $image ?>" class="card-img-top" alt="<?= $name ?>">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title"><?= $name ?></h5>
+                                <p class="card-text"><?= $price ?> PKR</p>
+                                <a href="add_to_cart.php?product_id=<?= $id ?>&quantity=1" class="btn btn-primary mt-auto">Add to Cart</a>
+                            </div>
+                        </div>
                     </div>
         <?php
                 }

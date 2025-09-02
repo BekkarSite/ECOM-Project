@@ -61,6 +61,7 @@
 </footer>
 <script src="../assets/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/custom/add_to_cart.js"></script>
+<script src="../assets/js/custom/cart.js"></script>
 
 </body>
 

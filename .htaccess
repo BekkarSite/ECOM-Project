@@ -1,5 +1,30 @@
-ReWriteEngine On
-ReWriteBase /
+RewriteEngine On
 
-# Clean URL for products
-ReWriteRule ^product/([0-9]+)$ product.php?id=$1 [L]
+# Adjust this if your app lives in a subfolder (e.g., /ECOM-Project/)
+# For XAMPP at http://localhost/ECOM-Project/ keep as below; for a vhost at /
+# change to '/'.
+RewriteBase /ECOM-Project/
+
+# If the requested resource exists as a file or directory, serve it directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Home route
+RewriteRule ^$ public/index.php [L,QSA]
+
+# Clean URL for a single product by ID: /product/123
+RewriteRule ^product/([0-9]+)/?$ public/product.php?id=$1 [L,QSA]
+
+# Map bare slugs (e.g., /products, /cart, /login) to public/*.php
+# Example: /products -> public/products.php
+RewriteRule ^([A-Za-z0-9_-]+)/?$ public/$1.php [L,QSA]
+
+# Also allow relative links to .php from nested clean URLs
+# Example: /product/123 -> link to add_to_cart.php resolves as /product/add_to_cart.php
+#          We rewrite it to public/add_to_cart.php
+RewriteRule ^(?:[A-Za-z0-9_-]+/)+([A-Za-z0-9_-]+)\.php$ public/$1.php [L,QSA]
+
+# Also allow links that include .php at the root
+# Example: /products.php -> public/products.php
+RewriteRule ^([A-Za-z0-9_-]+)\.php$ public/$1.php [L,QSA]

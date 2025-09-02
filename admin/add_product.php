@@ -98,9 +98,9 @@ $categories = $conn->query('SELECT id, name FROM categories');
                             <option value="<?= $row['id']; ?>"><?= htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?></option>
                         <?php endwhile; ?>
                     </select>
-                    <label>Image:</label>
+                    <label>IMAGE (960PX,1440PX):</label>
                     <input type="file" name="image" id="image" required>
-                    <small class="image-instructions">After selecting an image, its dimensions (width x height) will be displayed below.</small>
+                    <small class="image-instructions">After selecting an image, its dimensions (width × height) will be displayed below.</small>
                     <div id="image-dimensions"></div>
                     <label>Stock:</label>
                     <input type="number" name="stock" min="0" required>

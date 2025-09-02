@@ -95,6 +95,7 @@ if ($result) {
 <head>
     <meta charset="UTF-8">
     <title>User Role Management</title>
+    <link rel="stylesheet" href="../assets/css/custom/typography.css">
     <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
 </head>
 

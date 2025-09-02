@@ -33,6 +33,7 @@ $categoryCount = getCount($conn, 'categories');
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="../assets/css/custom/typography.css">
     <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
 </head>
 

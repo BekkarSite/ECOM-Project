@@ -11,6 +11,7 @@ if (!isset($_SESSION['admin_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>Payment Methods</title>
+    <link rel="stylesheet" href="../assets/css/custom/typography.css">
     <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
 </head>
 

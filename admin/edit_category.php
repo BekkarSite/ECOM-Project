@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Edit Category</title>
+    <link rel="stylesheet" href="../assets/css/custom/typography.css">
     <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
 </head>
 

@@ -71,6 +71,7 @@ $categories = $conn->query('SELECT id, name FROM categories');
 <head>
     <meta charset="UTF-8">
     <title>Add Product</title>
+    <link rel="stylesheet" href="../assets/css/custom/typography.css">
     <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
     <link rel="stylesheet" href="../assets/css/custom/addproductstyle.css">
 </head>

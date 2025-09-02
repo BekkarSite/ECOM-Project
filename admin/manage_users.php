@@ -57,6 +57,7 @@ if ($search !== '') {
 <head>
     <meta charset="UTF-8">
     <title>Manage Users</title>
+    <link rel="stylesheet" href="../assets/css/custom/typography.css">
     <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
     <link rel="stylesheet" href="../assets/css/custom/manageusersstyle.css">
 </head>

@@ -98,7 +98,7 @@ $categories = $conn->query('SELECT id, name FROM categories');
                             <option value="<?= $row['id']; ?>"><?= htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8'); ?></option>
                         <?php endwhile; ?>
                     </select>
-                    <label>IMAGE (960PX,1440PX):</label>
+                    <label>IMAGE (800PX × 800PX):</label>
                     <input type="file" name="image" id="image" required>
                     <small class="image-instructions">After selecting an image, its dimensions (width × height) will be displayed below.</small>
                     <div id="image-dimensions"></div>

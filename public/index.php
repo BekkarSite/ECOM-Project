@@ -3,43 +3,146 @@
 session_start();
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../app/includes/public/public_header.php';
+
+// Fetch categories for highlights (limit 6)
+$categories = [];
+if ($res = $conn->query("SELECT id, name FROM categories ORDER BY name ASC LIMIT 6")) {
+    while ($row = $res->fetch_assoc()) { $categories[] = $row; }
+}
+
+// Fetch featured/latest products (limit 8)
+$featured = [];
+if ($stmt = $conn->prepare("SELECT id, name, price, image FROM products ORDER BY id DESC LIMIT 8")) {
+    $stmt->execute();
+    $r = $stmt->get_result();
+    while ($row = $r->fetch_assoc()) { $featured[] = $row; }
+    $stmt->close();
+}
 ?>
 
-<main class="container my-5">
-    <h1 class="mb-4 text-center">Welcome to Our eCommerce Site</h1>
-    <section id="featured-products" class="row">
-        <h2 class="mb-4">Featured Products</h2>
-        <?php
-        $stmt = $conn->prepare("SELECT id, name, price, image FROM products LIMIT 4");
-        if ($stmt && $stmt->execute()) {
-            $result = $stmt->get_result();
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
-                    $name = htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8');
-                    $price = htmlspecialchars(number_format((float)$row['price'], 2), ENT_QUOTES, 'UTF-8');
-                    $image = htmlspecialchars($row['image'], ENT_QUOTES, 'UTF-8');
-        ?>
-                    <div class="col-md-3 mb-4">
-                        <div class="card h-100">
-                            <img src="../assets/images/<?= $image ?>" class="card-img-top" alt="<?= $name ?>">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title"><?= $name ?></h5>
-                                <p class="card-text"><?= $price ?> PKR</p>
-                                <a href="add_to_cart.php?product_id=<?= $id ?>&quantity=1" class="btn btn-primary mt-auto">Add to Cart</a>
-                            </div>
+<style>
+/********************
+  HOME PAGE STYLES
+*********************/
+.hero {
+  background: radial-gradient(1000px 500px at 20% 20%, #e9f5ff 0%, transparent 60%),
+              radial-gradient(800px 400px at 80% 0%, #fff5e6 0%, transparent 60%),
+              linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+}
+.hero-cta .btn { padding-left: 1.25rem; padding-right: 1.25rem; }
+.category-pill {
+  border-radius: 12px;
+  border: 1px solid #e9ecef;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.category-pill:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.07); }
+.product-card .card-img-top { object-fit: contain; }
+</style>
+
+<main>
+    <!-- Hero -->
+    <section class="hero py-5 py-md-6 border-bottom">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-12 col-lg-7">
+                    <h1 class="display-5 fw-bold mb-3">Discover quality products at great prices</h1>
+                    <p class="lead text-muted mb-4">Shop the latest arrivals, bestsellers, and hand-picked deals. Fast checkout. Secure payments.</p>
+                    <div class="hero-cta d-flex flex-wrap gap-2">
+                        <a href="products.php" class="btn btn-primary btn-lg"><i class="fa fa-store me-2"></i> Shop Now</a>
+                        <a href="categories.php" class="btn btn-outline-secondary btn-lg"><i class="fa fa-list me-2"></i> Browse Categories</a>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-5">
+                    <div class="ratio ratio-1x1 bg-light rounded d-flex align-items-center justify-content-center">
+                        <div class="text-center p-4">
+                            <i class="fa fa-cart-shopping text-primary" style="font-size:72px"></i>
+                            <div class="mt-3 text-muted">Your one-stop shop for everything.</div>
                         </div>
                     </div>
-        <?php
-                }
-            } else {
-                echo '<p>No products available.</p>';
-            }
-            $stmt->close();
-        } else {
-            echo '<p>Error loading products.</p>';
-        }
-        ?>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories highlight -->
+    <section class="py-5 border-bottom">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h2 class="h4 mb-0">Shop by Category</h2>
+                <a class="text-decoration-none" href="categories.php">View all</a>
+            </div>
+            <?php if (!empty($categories)): ?>
+                <div class="row g-3">
+                    <?php foreach ($categories as $cat): ?>
+                        <div class="col-6 col-md-4 col-lg-2">
+                            <a href="products.php?category_id=<?= (int)$cat['id']; ?>" class="text-decoration-none text-dark">
+                                <div class="category-pill p-3 h-100 d-flex align-items-center justify-content-center bg-white">
+                                    <span class="fw-semibold text-center text-truncate" title="<?= htmlspecialchars($cat['name']); ?>"><?= htmlspecialchars($cat['name']); ?></span>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <div class="alert alert-light mb-0">No categories available yet.</div>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <!-- Featured products -->
+    <section class="py-5">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <h2 class="h4 mb-0">Featured Products</h2>
+                <a class="text-decoration-none" href="products.php">Shop all</a>
+            </div>
+            <?php if (!empty($featured)): ?>
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+                    <?php foreach ($featured as $p): ?>
+                        <div class="col">
+                            <div class="card product-card h-100">
+                                <a href="product.php?id=<?= (int)$p['id']; ?>" class="text-decoration-none text-dark">
+                                    <div class="ratio ratio-1x1 bg-light">
+                                        <?php $img = $p['image'] ? '../assets/images/' . $p['image'] : '../assets/images/placeholder.svg'; ?>
+                                        <img src="<?= htmlspecialchars($img); ?>" class="card-img-top p-3" alt="<?= htmlspecialchars($p['name']); ?>">
+                                    </div>
+                                    <div class="card-body">
+                                        <h3 class="h6 card-title text-truncate mb-2" title="<?= htmlspecialchars($p['name']); ?>"><?= htmlspecialchars($p['name']); ?></h3>
+                                        <div class="fw-bold text-primary mb-0"><?= htmlspecialchars(number_format((float)$p['price'], 2)); ?> PKR</div>
+                                    </div>
+                                </a>
+                                <div class="card-footer bg-white border-0 pt-0 pb-3 px-3">
+                                    <a href="add_to_cart.php?product_id=<?= (int)$p['id']; ?>&quantity=1" class="btn btn-outline-primary w-100 add-to-cart">
+                                        <i class="fa fa-cart-plus me-1"></i> Add to Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <div class="alert alert-light mb-0">No products available.</div>
+            <?php endif; ?>
+        </div>
+    </section>
+
+    <!-- Newsletter CTA -->
+    <section class="py-5 bg-light border-top border-bottom">
+        <div class="container">
+            <div class="row align-items-center g-3">
+                <div class="col-12 col-md-6">
+                    <h2 class="h4 mb-1">Stay in the loop</h2>
+                    <p class="text-muted mb-0">Get updates on new arrivals, promotions, and tips.</p>
+                </div>
+                <div class="col-12 col-md-6">
+                    <form action="subscribe.php" method="POST" class="d-flex gap-2">
+                        <label for="newsletter-home" class="visually-hidden">Email address</label>
+                        <input type="email" id="newsletter-home" name="email" class="form-control" placeholder="Enter your email" required>
+                        <button class="btn btn-warning" type="submit"><i class="fa fa-envelope me-1"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 </main>
 

@@ -1,36 +1,49 @@
 <?php
 session_start();
+require_once __DIR__ . '/../config/db.php';
 
-// Ensure both product_id and quantity are provided
-if (isset($_GET['product_id'], $_GET['quantity'])) {
-    // Cast incoming values to integers to avoid unexpected input
-    $product_id = (int) $_GET['product_id'];
-    $quantity = max(1, (int) $_GET['quantity']);
+$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
+    strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
 
-    // Initialize the cart if it doesn't exist yet
-    if (!isset($_SESSION['cart'])) {
-        $_SESSION['cart'] = [];
-    }
-
-    // Check if product is already in the cart and update accordingly
-    if (isset($_SESSION['cart'][$product_id])) {
-        $_SESSION['cart'][$product_id] += $quantity;
-    } else {
-        $_SESSION['cart'][$product_id] = $quantity;
-    }
-
-    // Determine if the request was made via AJAX
-    $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-        strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-
+if (!isset($_GET['product_id'], $_GET['quantity'])) {
     if ($isAjax) {
-        // Return the new cart count as JSON
-        header('Content-Type: application/json');
-        echo json_encode(['count' => array_sum($_SESSION['cart'])]);
+        header('Content-Type: application/json', true, 400);
+        echo json_encode(['error' => 'Missing parameters']);
     } else {
-        // Redirect to the cart page for normal requests
-        header('Location: cart.php');
+        header('Location: products.php');
     }
     exit();
 }
-?>
+
+$product_id = (int) $_GET['product_id'];
+$quantity = max(1, (int) $_GET['quantity']);
+
+$stmt = $conn->prepare('SELECT id FROM products WHERE id = ?');
+$stmt->bind_param('i', $product_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$exists = $result && $result->fetch_assoc();
+$stmt->close();
+
+if (!$exists) {
+    if ($isAjax) {
+        header('Content-Type: application/json', true, 400);
+        echo json_encode(['error' => 'Invalid product']);
+    } else {
+        header('Location: products.php');
+    }
+    exit();
+}
+
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+$_SESSION['cart'][$product_id] = ($_SESSION['cart'][$product_id] ?? 0) + $quantity;
+
+if ($isAjax) {
+    header('Content-Type: application/json');
+    echo json_encode(['count' => array_sum($_SESSION['cart'])]);
+} else {
+    header('Location: cart.php');
+}
+exit();

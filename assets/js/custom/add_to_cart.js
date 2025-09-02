@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const url = link.getAttribute('href');
             fetch(url, {
+                credentials: 'same-origin',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }

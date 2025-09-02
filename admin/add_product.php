@@ -99,7 +99,9 @@ $categories = $conn->query('SELECT id, name FROM categories');
                         <?php endwhile; ?>
                     </select>
                     <label>Image:</label>
-                    <input type="file" name="image" required>
+                    <input type="file" name="image" id="image" required>
+                    <small class="image-instructions">After selecting an image, its dimensions (width x height) will be displayed below.</small>
+                    <div id="image-dimensions"></div>
                     <label>Stock:</label>
                     <input type="number" name="stock" min="0" required>
                     <button type="submit">Add Product</button>
@@ -108,6 +110,23 @@ $categories = $conn->query('SELECT id, name FROM categories');
         </main>
     </div>
     <?php require_once __DIR__ . '/../app/includes/admin/admin_footer.php'; ?>
+    <script>
+        const imageInput = document.getElementById('image');
+        const imageDimensions = document.getElementById('image-dimensions');
+
+        imageInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (!file) {
+                imageDimensions.textContent = '';
+                return;
+            }
+            const img = new Image();
+            img.onload = function () {
+                imageDimensions.textContent = `Image size: ${this.naturalWidth} x ${this.naturalHeight}px`;
+            };
+            img.src = URL.createObjectURL(file);
+        });
+    </script>
 </body>
 
 </html>

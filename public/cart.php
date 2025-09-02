@@ -36,9 +36,10 @@ if (isset($_GET['action'])) {
 
         $response = ['count' => array_sum($cart)];
 
+        $quantity = 0;
+        $price = 0;
         if ($productId !== null) {
             $quantity = $cart[$productId] ?? 0;
-            $price = 0;
             if ($quantity > 0) {
                 $stmt = $conn->prepare('SELECT price FROM products WHERE id = ?');
                 $stmt->bind_param('i', $productId);

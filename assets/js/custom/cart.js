@@ -6,13 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!table) return;
 
     table.addEventListener('click', event => {
-        const target = event.target;
-        if (!target.classList.contains('qty-btn')) return;
+        // Support clicks on nested elements within the quantity button
+        const button = event.target.closest('.qty-btn');
+        if (!button) return;
 
         event.preventDefault();
-        const url = target.getAttribute('href');
+        const url = button.getAttribute('href');
 
         fetch(url, {
+            credentials: 'same-origin',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
             }
@@ -21,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (!data) return;
 
-                const row = target.closest('tr');
+                const row = button.closest('tr');
 
                 if (data.removed) {
                     row.remove();

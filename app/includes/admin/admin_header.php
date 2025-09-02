@@ -5,6 +5,12 @@
 <link rel="stylesheet" href="../assets/css/custom/headerstyle.css">
 <link rel="stylesheet" href="../assets/css/custom/footerstyle.css">
 <?php
+// Load dynamic logo from settings if available
+require_once __DIR__ . '/../../helpers/settings.php';
+require_once __DIR__ . '/../../../config/db.php';
+$logoPath = get_setting($conn, 'site_logo', 'assets/images/logo.png');
+?>
+<?php
 $adminName  = htmlspecialchars($_SESSION['admin_name'] ?? 'Admin', ENT_QUOTES, 'UTF-8');
 $adminEmail = htmlspecialchars($_SESSION['email'] ?? '', ENT_QUOTES, 'UTF-8');
 ?>
@@ -16,7 +22,7 @@ $adminEmail = htmlspecialchars($_SESSION['email'] ?? '', ENT_QUOTES, 'UTF-8');
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a href="dashboard.php" class="navbar-brand">
-            <img src="../assets/images/logo.png" alt="Logo" class="d-inline-block align-text-top">
+            <img src="../<?php echo htmlspecialchars($logoPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" class="d-inline-block align-text-top">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar" aria-controls="adminNavbar" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>

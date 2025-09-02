@@ -71,10 +71,26 @@ $categories = $conn->query('SELECT id, name FROM categories');
 <head>
     <meta charset="UTF-8">
     <title>Add Product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/custom/typography.css">
+    <link rel="stylesheet" href="../assets/css/custom/headerstyle.css">
+    <link rel="stylesheet" href="../assets/css/custom/footerstyle.css">
     <link rel="stylesheet" href="../assets/css/custom/admindashboard.css">
     <link rel="stylesheet" href="../assets/css/custom/addproductstyle.css">
-</head>
+    <script>
+        // Keep admin in sync with public loader behavior
+        window.addEventListener('load', function() {
+            var loader = document.getElementById('loader');
+            if (loader) loader.classList.add('hidden');
+        });
+    </script>
+    <style>
+        /* Ensure content doesn't touch edges under the navbar */
+        .content { padding-top: 20px; }
+    </style>
+    </head>
 
 <body>
     <?php require_once __DIR__ . '/../app/includes/admin/admin_header.php'; ?>

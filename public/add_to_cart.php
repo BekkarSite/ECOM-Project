@@ -1,4 +1,3 @@
-<!-- public/add_to_cart.php -->
 <?php
 session_start();
 

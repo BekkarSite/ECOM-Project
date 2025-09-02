@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_product'])) {
 
     if (!empty($_FILES['image']['name'])) {
         $image = basename($_FILES['image']['name']);
-        $target_dir = "../../assets/images/";
+        $target_dir = __DIR__ . '/../assets/images/';
         $target_file = $target_dir . $image;
         move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
     }

@@ -24,10 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stock = $_POST['stock'];
 
     if ($image) {
-        $target_dir = "../../assets/images/";
-        $target_file = $target_dir . basename($image);
+        $image_name = basename($image);
+        $target_dir = __DIR__ . '/../assets/images/';
+        $target_file = $target_dir . $image_name;
         move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
-        $image_sql = ", image='$image'";
+        $image_sql = ", image='$image_name'";
     } else {
         $image_sql = "";
     }

@@ -8,6 +8,7 @@ function active($file, $current) { return $file === $current ? 'active' : ''; }
   <ul class="nav">
     <li class="nav-item"><a class="nav-link <?php echo active('dashboard.php', $current); ?>" href="dashboard.php"><i class="fa fa-gauge"></i> <span>Dashboard</span></a></li>
     <li class="nav-item"><a class="nav-link <?php echo active('manage_orders.php', $current); ?>" href="manage_orders.php"><i class="fa fa-receipt"></i> <span>Orders</span></a></li>
+    <li class="nav-item"><a class="nav-link <?php echo active('inventory.php', $current); ?>" href="inventory.php"><i class="fa fa-warehouse"></i> <span>Inventory</span></a></li>
     <li class="nav-item"><a class="nav-link <?php echo active('manage_products.php', $current); ?>" href="manage_products.php"><i class="fa fa-box"></i> <span>Products</span></a></li>
     <li class="nav-item"><a class="nav-link <?php echo active('manage_categories.php', $current); ?>" href="manage_categories.php"><i class="fa fa-tags"></i> <span>Categories</span></a></li>
     <li class="nav-item"><a class="nav-link <?php echo active('manage_users.php', $current); ?>" href="manage_users.php"><i class="fa fa-users"></i> <span>Users</span></a></li>

@@ -83,7 +83,7 @@ if ($order_id > 0) {
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-cart-plus me-1"></i> Reorder</button>
                             </form>
                             <?php if ($order['status'] === 'pending'): ?>
-                                <form method="post" action="cancel_order.php" class="m-0" onsubmit="return confirm('Cancel this pending order?');">
+                                <form method="post" action="cancel-order" class="m-0" onsubmit="return confirm('Cancel this pending order?');">
                                     <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($csrf_token); ?>">
                                     <input type="hidden" name="order_id" value="<?= (int)$order['id']; ?>">
                                     <button type="submit" class="btn btn-outline-danger"><i class="fa fa-ban me-1"></i> Cancel</button>

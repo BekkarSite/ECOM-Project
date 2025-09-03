@@ -152,6 +152,7 @@ body { background: var(--bg-page); color: var(--text-regular); display: flex; fl
 .admin-footer {
   border-top: 1px solid var(--border);
   background: #0d1626; color: #cbd5e1;
+  margin-top: 0 !important; /* eliminate gaps above footer */
 }
 .admin-footer small { color: #8aa0bf !important; }
 

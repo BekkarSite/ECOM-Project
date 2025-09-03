@@ -12,11 +12,19 @@ $BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
 require_once __DIR__ . '/../../helpers/settings.php';
 require_once __DIR__ . '/../../../config/db.php';
 
-// Global authentication guard: restrict entire site to authenticated users
-// Whitelist auth endpoints to avoid redirect loops
+// Authentication guard: only protect sensitive pages, allow storefront to be public
 $currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
-$whitelist = ['login.php', 'register.php', 'logout.php', 'forgot_password.php', 'reset_password.php'];
-if (!isset($_SESSION['user_id']) && !in_array($currentScript, $whitelist, true)) {
+// Pages that require a logged-in customer
+$protected = [
+    'dashboard.php',
+    'orders.php',
+    'order.php',
+    'profile.php',
+    'checkout.php',
+    'reorder.php',
+    'cancel_order.php',
+];
+if (!isset($_SESSION['user_id']) && in_array($currentScript, $protected, true)) {
     $next = urlencode($_SERVER['REQUEST_URI'] ?? '');
     header('Location: login.php' . ($next ? ('?next=' . $next) : ''));
     exit;
@@ -55,11 +63,15 @@ if (!isset($_SESSION['user_id']) && !in_array($currentScript, $whitelist, true))
 
     <nav class="navbar navbar-expand-lg navbar-light theme-navbar sticky-top">
         <div class="container">
+            <!-- Sidebar (offcanvas) toggle shown on mobile -->
+            <button class="btn btn-outline-secondary d-lg-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-label="Open menu">
+                <i class="fa fa-bars"></i>
+            </button>
             <a href="index.php" class="navbar-brand d-flex align-items-center gap-2">
                 <img src="<?= $BASE_PATH ?>/<?php echo htmlspecialchars($publicLogoPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" class="d-inline-block align-text-top">
             </a>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler d-none" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -107,3 +119,59 @@ if (!isset($_SESSION['user_id']) && !in_array($currentScript, $whitelist, true))
             </div>
         </div>
     </nav>
+
+    <!-- Offcanvas Sidebar Menu -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="sidebarMenuLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body d-flex flex-column gap-3">
+            <!-- Search -->
+            <form action="search.php" method="GET" role="search">
+                <div class="input-group">
+                    <input class="form-control" type="text" name="query" placeholder="Search products..." required>
+                    <button class="btn btn-outline-primary" type="submit"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+
+            <!-- Primary Nav Links -->
+            <div>
+                <div class="list-group">
+                    <a class="list-group-item list-group-item-action<?php echo nav_active($current, 'index.php'); ?>" href="index.php"><i class="fa fa-house me-2"></i>Home</a>
+                    <a class="list-group-item list-group-item-action<?php echo nav_active($current, 'products.php'); ?>" href="products.php"><i class="fa fa-box-open me-2"></i>Products</a>
+                    <a class="list-group-item list-group-item-action<?php echo nav_active($current, 'categories.php'); ?>" href="categories.php"><i class="fa fa-tags me-2"></i>Categories</a>
+                    <a class="list-group-item list-group-item-action<?php echo nav_active($current, 'about.php'); ?>" href="about.php"><i class="fa fa-circle-info me-2"></i>About Us</a>
+                    <a class="list-group-item list-group-item-action<?php echo nav_active($current, 'contact.php'); ?>" href="contact.php"><i class="fa fa-envelope me-2"></i>Contact</a>
+                </div>
+            </div>
+
+            <!-- Account / Auth -->
+            <div>
+                <h6 class="text-uppercase text-muted mb-2">Account</h6>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action" href="dashboard.php"><i class="fa fa-gauge-high me-2"></i>Dashboard</a>
+                        <a class="list-group-item list-group-item-action" href="orders.php"><i class="fa fa-receipt me-2"></i>Orders</a>
+                        <a class="list-group-item list-group-item-action" href="profile.php"><i class="fa fa-id-badge me-2"></i>Profile & Settings</a>
+                        <a class="list-group-item list-group-item-action" href="logout.php"><i class="fa fa-right-from-bracket me-2"></i>Logout</a>
+                    </div>
+                <?php else: ?>
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-secondary w-50" href="login.php">Login</a>
+                        <a class="btn btn-primary w-50" href="register.php">Register</a>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <!-- Cart quick access -->
+            <div class="mt-auto">
+                <a href="cart.php" class="btn btn-outline-dark w-100 position-relative">
+                    <i class="fa fa-shopping-cart me-2"></i> View Cart
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <?php echo array_sum($_SESSION['cart'] ?? []); ?>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>

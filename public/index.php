@@ -10,13 +10,38 @@ if ($res = $conn->query("SELECT id, name FROM categories ORDER BY name ASC LIMIT
     while ($row = $res->fetch_assoc()) { $categories[] = $row; }
 }
 
-// Fetch featured/latest products (limit 8)
+// Fetch featured products as configured; fallback to latest
 $featured = [];
-if ($stmt = $conn->prepare("SELECT id, name, price, image FROM products ORDER BY id DESC LIMIT 8")) {
-    $stmt->execute();
-    $r = $stmt->get_result();
-    while ($row = $r->fetch_assoc()) { $featured[] = $row; }
-    $stmt->close();
+// try to read selection from settings
+$selJson = get_setting($conn, 'featured_product_ids', '[]');
+$sel = json_decode((string)$selJson, true);
+if (is_array($sel)) {
+    // normalize to ints and keep order
+    $ids = array_values(array_filter(array_map('intval', $sel), fn($v)=>$v>0));
+    if (!empty($ids)) {
+        // Limit to 8 for home; preserve order using FIELD()
+        $idsLimited = array_slice($ids, 0, 8);
+        $placeholders = implode(',', array_fill(0, count($idsLimited), '?'));
+        $types = str_repeat('i', count($idsLimited));
+        $orderField = implode(',', $idsLimited);
+        $sql = "SELECT id, name, price, image FROM products WHERE id IN ($placeholders) ORDER BY FIELD(id, $orderField)";
+        if ($stmt = $conn->prepare($sql)) {
+            $stmt->bind_param($types, ...$idsLimited);
+            $stmt->execute();
+            $r = $stmt->get_result();
+            while ($row = $r->fetch_assoc()) { $featured[] = $row; }
+            $stmt->close();
+        }
+    }
+}
+// Fallback: latest 8
+if (empty($featured)) {
+    if ($stmt = $conn->prepare("SELECT id, name, price, image FROM products ORDER BY id DESC LIMIT 8")) {
+        $stmt->execute();
+        $r = $stmt->get_result();
+        while ($row = $r->fetch_assoc()) { $featured[] = $row; }
+        $stmt->close();
+    }
 }
 ?>
 
@@ -112,7 +137,7 @@ if ($stmt = $conn->prepare("SELECT id, name, price, image FROM products ORDER BY
                                     </div>
                                 </a>
                                 <div class="card-footer bg-white border-0 pt-0 pb-3 px-3">
-                                    <a href="add_to_cart.php?product_id=<?= (int)$p['id']; ?>&quantity=1" class="btn btn-outline-primary w-100 add-to-cart">
+                                    <a href="add-to-cart?product_id=<?= (int)$p['id']; ?>&quantity=1" class="btn btn-outline-primary w-100 add-to-cart">
                                         <i class="fa fa-cart-plus me-1"></i> Add to Cart
                                     </a>
                                 </div>

@@ -18,6 +18,26 @@ RewriteRule ^$ public/index.php [L,QSA]
 # Clean URL for a single product by ID: /product/123
 RewriteRule ^product/([0-9]+)/?$ public/product.php?id=$1 [L,QSA]
 
+# Pretty aliases for cleaner, professional URLs (keep legacy PHP names intact)
+RewriteRule ^add-to-cart/?$ public/add_to_cart.php [L,QSA]
+RewriteRule ^cancel-order/?$ public/cancel_order.php [L,QSA]
+RewriteRule ^order-confirmation/?$ public/order_confirmation.php [L,QSA]
+RewriteRule ^forgot-password/?$ public/forgot_password.php [L,QSA]
+RewriteRule ^reset-password/?$ public/reset_password.php [L,QSA]
+RewriteRule ^shopping-cart/?$ public/cart.php [L,QSA]
+RewriteRule ^shop/categories/?$ public/categories.php [L,QSA]
+RewriteRule ^checkout/?$ public/checkout.php [L,QSA]
+RewriteRule ^user/dashboard/?$ public/dashboard.php [L,QSA]
+RewriteRule ^user/login/?$ public/login.php [L,QSA]
+RewriteRule ^user/logout/?$ public/logout.php [L,QSA]
+RewriteRule ^user/register/?$ public/register.php [L,QSA]
+RewriteRule ^user/profile/?$ public/profile.php [L,QSA]
+RewriteRule ^shop/products/?$ public/products.php [L,QSA]
+RewriteRule ^shop/product/([0-9]+)/?$ public/product.php?id=$1 [L,QSA]
+RewriteRule ^orders/?$ public/orders.php [L,QSA]
+RewriteRule ^order/?$ public/order.php [L,QSA]
+RewriteRule ^reorder/?$ public/reorder.php [L,QSA]
+
 # Map bare slugs (e.g., /products, /cart, /login) to public/*.php
 # Example: /products -> public/products.php
 RewriteRule ^([A-Za-z0-9_-]+)/?$ public/$1.php [L,QSA]

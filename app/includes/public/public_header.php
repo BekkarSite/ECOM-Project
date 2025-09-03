@@ -1,18 +1,41 @@
+<?php
+// Compute base web path so assets work from domain root or subfolder
+$docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT'])) : '';
+$projRoot = str_replace('\\', '/', realpath(__DIR__ . '/../../../'));
+$baseUri = '';
+if ($docRoot && $projRoot && strpos($projRoot, $docRoot) === 0) {
+    $baseUri = rtrim(substr($projRoot, strlen($docRoot)), '/');
+}
+$BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
+
+// Load settings and DB to support dynamic logo and potential global checks
+require_once __DIR__ . '/../../helpers/settings.php';
+require_once __DIR__ . '/../../../config/db.php';
+
+// Global authentication guard: restrict entire site to authenticated users
+// Whitelist auth endpoints to avoid redirect loops
+$currentScript = basename($_SERVER['SCRIPT_NAME'] ?? '');
+$whitelist = ['login.php', 'register.php', 'logout.php', 'forgot_password.php', 'reset_password.php'];
+if (!isset($_SESSION['user_id']) && !in_array($currentScript, $whitelist, true)) {
+    $next = urlencode($_SERVER['REQUEST_URI'] ?? '');
+    header('Location: login.php' . ($next ? ('?next=' . $next) : ''));
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <!-- public_header.php -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/custom/typography.css">
-    <link rel="stylesheet" href="../assets/css/custom/headerstyle.css">
-    <link rel="stylesheet" href="../assets/css/custom/footerstyle.css">
+    <link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/custom/typography.css">
+    <link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/custom/headerstyle.css">
+    <link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/custom/footerstyle.css">
+    <link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/custom/theme.css">
     <?php
     // Dynamic site logo
-    require_once __DIR__ . '/../../helpers/settings.php';
-    require_once __DIR__ . '/../../../config/db.php';
     $publicLogoPath = get_setting($conn, 'site_logo', 'assets/images/logo.png');
     $current = basename($_SERVER['SCRIPT_NAME'] ?? '');
     function nav_active($current, $target) { return $current === $target ? ' active' : ''; }
@@ -24,24 +47,16 @@
             if (loader) loader.classList.add('hidden');
         });
     </script>
-    <style>
-        /* Minimal header refinements */
-        .navbar-brand img { height: 42px; width: auto; }
-        .navbar .nav-link.active { font-weight: 600; }
-        #loader { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(255,255,255,.9); z-index: 1055; transition: opacity .3s ease, visibility .3s ease; }
-        #loader.hidden { opacity: 0; visibility: hidden; }
-        #loader img { width: 72px; height: 72px; object-fit: contain; }
-    </style>
-</head>
+    </head>
 <body>
     <div id="loader">
-        <img src="../assets/images/loading.gif" alt="Loading...">
+        <img src="<?= $BASE_PATH ?>/assets/images/loading.gif" alt="Loading...">
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light theme-navbar sticky-top">
         <div class="container">
             <a href="index.php" class="navbar-brand d-flex align-items-center gap-2">
-                <img src="../<?php echo htmlspecialchars($publicLogoPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" class="d-inline-block align-text-top">
+                <img src="<?= $BASE_PATH ?>/<?php echo htmlspecialchars($publicLogoPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" class="d-inline-block align-text-top">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">

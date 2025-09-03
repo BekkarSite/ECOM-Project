@@ -114,7 +114,7 @@ if ($order_id > 0) {
                                                 <tr>
                                                     <td>
                                                         <div class="d-flex align-items-center">
-                                                            <?php $img = $it['image'] ? '../assets/images/' . $it['image'] : '../assets/images/placeholder.svg'; ?>
+                                                            <?php $img = $it['image'] ? ($BASE_PATH . '/assets/images/' . $it['image']) : ($BASE_PATH . '/assets/images/placeholder.svg'); ?>
                                                             <img src="<?= htmlspecialchars($img); ?>" alt="<?= htmlspecialchars($it['name']); ?>" style="width:48px;height:48px;object-fit:contain;" class="me-2 rounded bg-light p-1">
                                                             <div>
                                                                 <div class="fw-semibold"><a href="product.php?id=<?= (int)$it['product_id']; ?>" class="text-decoration-none"><?= htmlspecialchars($it['name']); ?></a></div>

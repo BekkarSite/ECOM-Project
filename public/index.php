@@ -103,7 +103,7 @@ if ($stmt = $conn->prepare("SELECT id, name, price, image FROM products ORDER BY
                             <div class="card product-card h-100">
                                 <a href="product.php?id=<?= (int)$p['id']; ?>" class="text-decoration-none text-dark">
                                     <div class="ratio ratio-1x1 bg-light">
-                                        <?php $img = $p['image'] ? '../assets/images/' . $p['image'] : '../assets/images/placeholder.svg'; ?>
+                                        <?php $img = $p['image'] ? ($BASE_PATH . '/assets/images/' . $p['image']) : ($BASE_PATH . '/assets/images/placeholder.svg'); ?>
                                         <img src="<?= htmlspecialchars($img); ?>" class="card-img-top p-3" alt="<?= htmlspecialchars($p['name']); ?>">
                                     </div>
                                     <div class="card-body">

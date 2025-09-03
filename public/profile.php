@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../app/helpers/security.php';
 require_once __DIR__ . '/../app/includes/public/public_header.php';
 
 if (!isset($_SESSION['user_id'])) {
@@ -93,8 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!password_verify($current, $user['password'])) {
             set_flash(false, 'Current password is incorrect.');
-        } elseif (strlen($new) < 8) {
-            set_flash(false, 'New password must be at least 8 characters.');
+        } elseif (!is_strong_password($new, $pwErr)) {
+            set_flash(false, $pwErr ?? 'New password does not meet complexity requirements.');
         } elseif ($new !== $confirm) {
             set_flash(false, 'New password and confirmation do not match.');
         } else {
@@ -186,12 +187,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </div>
                             <div class="mb-3">
                                 <label for="new_password" class="form-label">New password</label>
-                                <input type="password" class="form-control" id="new_password" name="new_password" minlength="8" required>
-                                <div class="form-text">Minimum 8 characters.</div>
+                                <input type="password" class="form-control" id="new_password" name="new_password" minlength="10" required>
+                                <div class="form-text">At least 10 chars, with upper, lower, digit, and special character.</div>
                             </div>
                             <div class="mb-3">
                                 <label for="confirm_password" class="form-label">Confirm new password</label>
-                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" minlength="8" required>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" minlength="10" required>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-key me-1"></i> Update Password</button>
                         </form>

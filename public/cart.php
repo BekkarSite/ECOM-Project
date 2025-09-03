@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../app/includes/auth_guard.php';
 
 $cart = $_SESSION['cart'] ?? [];
 

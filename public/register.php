@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/../app/helpers/security.php';
 require_once __DIR__ . '/../app/includes/public/public_header.php';
 
 $registrationPaused = false;
@@ -21,9 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = trim($_POST['email'] ?? '');
         $password = trim($_POST['password'] ?? '');
         $confirm_password = trim($_POST['confirm_password'] ?? '');
+        $captcha = $_POST['captcha'] ?? '';
 
-        if ($password !== $confirm_password) {
+        if (!captcha_validate($captcha)) {
+            $error = 'CAPTCHA verification failed.';
+        } elseif ($password !== $confirm_password) {
             $error = 'Passwords do not match!';
+        } elseif (!is_strong_password($password, $pwErr)) {
+            $error = $pwErr ?? 'Password does not meet complexity requirements.';
         } else {
             // Check if the email is already registered to avoid duplicate entries
             $checkStmt = $conn->prepare('SELECT id FROM users WHERE email = ?');
@@ -61,24 +67,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+// Prepare CAPTCHA question for the form each render
+$captchaQuestion = captcha_generate();
 ?>
-<link rel="stylesheet" href="../assets/css/custom/registerstyle.css">
+<link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/custom/registerstyle.css">
 <main class="register-wrapper">
     <?php if ($registrationPaused): ?>
         <p class="error">Registration is currently paused.</p>
     <?php else: ?>
         <form method="POST" class="register-form">
             <h2>Register</h2>
+            <p class="hint">Create your account with a strong password: at least 10 characters, including uppercase, lowercase, digit, and special character. Already have an account? <a href="login.php<?= isset($_GET['next']) ? ('?next=' . urlencode($_GET['next'])) : '' ?>">Log in</a>.</p>
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
             <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" minlength="10" required>
+            <small>Password must be at least 10 characters and include upper, lower, digit, and special character.</small>
             <label for="confirm_password">Confirm Password</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
+            <input type="password" id="confirm_password" name="confirm_password" minlength="10" required>
+            <label for="captcha"><?= htmlspecialchars($captchaQuestion, ENT_QUOTES, 'UTF-8'); ?></label>
+            <input type="text" id="captcha" name="captcha" placeholder="Answer" required>
             <?php if (isset($error)): ?>
                 <p class="error"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
             <?php endif; ?>
             <button type="submit">Register</button>
+            <p class="alt-link">Have an account? <a href="login.php<?= isset($_GET['next']) ? ('?next=' . urlencode($_GET['next'])) : '' ?>">Sign in</a></p>
         </form>
     <?php endif; ?>
 </main>

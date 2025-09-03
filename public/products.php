@@ -174,7 +174,7 @@ $baseQuery = buildQuery([
                             <div class="card product-card h-100">
                                 <a href="product.php?id=<?= (int)$product['id'] ?>" class="text-decoration-none text-dark">
                                     <div class="ratio ratio-1x1 product-thumb bg-light">
-                                        <?php $img = $product['image'] ? '../assets/images/' . $product['image'] : '../assets/images/placeholder.svg'; ?>
+                                        <?php $img = $product['image'] ? ($BASE_PATH . '/assets/images/' . $product['image']) : ($BASE_PATH . '/assets/images/placeholder.svg'); ?>
                                         <img src="<?= htmlspecialchars($img) ?>" class="card-img-top object-fit-contain p-3" alt="<?= htmlspecialchars($product['name']) ?>">
                                     </div>
                                     <div class="card-body">

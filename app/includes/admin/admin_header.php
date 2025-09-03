@@ -8,17 +8,26 @@ $logoPath = get_setting($conn, 'site_logo', 'assets/images/logo.png');
 
 $adminName  = htmlspecialchars($_SESSION['admin_name'] ?? 'Admin', ENT_QUOTES, 'UTF-8');
 $adminEmail = htmlspecialchars($_SESSION['email'] ?? '', ENT_QUOTES, 'UTF-8');
+
+// Compute base web path so assets work from domain root or subfolder
+$docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT'])) : '';
+$projRoot = str_replace('\\', '/', realpath(__DIR__ . '/../../../'));
+$baseUri = '';
+if ($docRoot && $projRoot && strpos($projRoot, $docRoot) === 0) {
+    $baseUri = rtrim(substr($projRoot, strlen($docRoot)), '/');
+}
+$BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
 ?>
-<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-1pA7QzlQv/CU7nzhbW4QEi2qk2ZVjGv8gJYkTn3LQ2mK0m1V6x9r4YkU/1H2Og6g5c5u9uUpOqctZC4YgXy4Vg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-<link rel="stylesheet" href="../assets/css/custom/admin.css">
+<link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/custom/admin.css">
 
 <div id="loader">
-    <img src="../assets/images/loading.gif" alt="Loading...">
+    <img src="<?= $BASE_PATH ?>/assets/images/loading.gif" alt="Loading...">
 </div>
 
-<nav class="navbar navbar-expand-lg admin-navbar">
-  <div class="container">
+<nav class="navbar navbar-expand-lg navbar-dark admin-navbar">
+  <div class="container-fluid px-3 px-lg-4">
     <div class="d-flex align-items-center w-100">
       <!-- Sidebar toggle (mobile) + Brand -->
       <div class="d-flex align-items-center flex-shrink-0">
@@ -26,7 +35,7 @@ $adminEmail = htmlspecialchars($_SESSION['email'] ?? '', ENT_QUOTES, 'UTF-8');
           <i class="fa fa-bars"></i>
         </button>
         <a href="dashboard.php" class="navbar-brand d-flex align-items-center">
-          <img src="../<?php echo htmlspecialchars($logoPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" class="d-inline-block align-text-top">
+          <img src="<?= $BASE_PATH ?>/<?php echo htmlspecialchars($logoPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" class="d-inline-block align-text-top">
         </a>
       </div>
 
@@ -110,3 +119,27 @@ $adminEmail = htmlspecialchars($_SESSION['email'] ?? '', ENT_QUOTES, 'UTF-8');
     </div>
   </div>
 </nav>
+
+<script>
+  // Keep the CSS variable --nav-height in sync with the actual header height
+  (function() {
+    function syncNavHeight() {
+      var nav = document.querySelector('.admin-navbar');
+      if (nav && document.documentElement) {
+        document.documentElement.style.setProperty('--nav-height', nav.offsetHeight + 'px');
+      }
+    }
+    document.addEventListener('DOMContentLoaded', syncNavHeight);
+    window.addEventListener('load', syncNavHeight);
+    window.addEventListener('resize', syncNavHeight);
+  })();
+  // Simple sidebar toggle for mobile
+  (function() {
+    var btn = document.getElementById('sidebarToggle');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        document.body.classList.toggle('sidebar-open');
+      });
+    }
+  })();
+</script>

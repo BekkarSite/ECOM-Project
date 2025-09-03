@@ -43,7 +43,7 @@ if (isset($_GET['id'])) {
             <div class="row g-4">
                 <div class="col-12 col-md-6">
                     <div class="ratio ratio-1x1 bg-light d-flex align-items-center justify-content-center rounded">
-                        <?php $img = $product['image'] ? '../assets/images/' . $product['image'] : '../assets/images/placeholder.png'; ?>
+                        <?php $img = $product['image'] ? ($BASE_PATH . '/assets/images/' . $product['image']) : ($BASE_PATH . '/assets/images/placeholder.png'); ?>
                         <img src="<?= htmlspecialchars($img) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="img-fluid p-3 object-fit-contain">
                     </div>
                 </div>
@@ -103,7 +103,7 @@ if (isset($_GET['id'])) {
                             <div class="card h-100">
                                 <a href="product.php?id=<?= (int)$p['id'] ?>" class="text-decoration-none text-dark">
                                     <div class="ratio ratio-1x1 bg-light">
-                                        <?php $rimg = $p['image'] ? '../assets/images/' . $p['image'] : '../assets/images/placeholder.png'; ?>
+                                        <?php $rimg = $p['image'] ? ($BASE_PATH . '/assets/images/' . $p['image']) : ($BASE_PATH . '/assets/images/placeholder.png'); ?>
                                         <img src="<?= htmlspecialchars($rimg) ?>" class="card-img-top object-fit-contain p-3" alt="<?= htmlspecialchars($p['name']) ?>">
                                     </div>
                                     <div class="card-body">

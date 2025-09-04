@@ -248,7 +248,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
                         <div class="card-header bg-white d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center gap-2">
                                 <h5 class="mb-0">PayPal</h5>
-                                <span class="badge-soft"><i class="fa fa-globe me-1"></i>Online</span>
+                                <span class="badge-soft"><i class="bi bi-globe me-1"></i>Online</span>
                             </div>
                             <div class="form-check form-switch m-0">
                                 <input class="form-check-input" type="checkbox" role="switch" id="paypal_enabled" name="gateway[paypal][enabled]" value="1" <?php echo $pp['enabled'] ? 'checked' : ''; ?> />
@@ -291,7 +291,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
                         <div class="card-header bg-white d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center gap-2">
                                 <h5 class="mb-0">Stripe</h5>
-                                <span class="badge-soft"><i class="fa fa-globe me-1"></i>Online</span>
+                                <span class="badge-soft"><i class="bi bi-globe me-1"></i>Online</span>
                             </div>
                             <div class="form-check form-switch m-0">
                                 <input class="form-check-input" type="checkbox" role="switch" id="stripe_enabled" name="gateway[stripe][enabled]" value="1" <?php echo $st['enabled'] ? 'checked' : ''; ?> />
@@ -326,7 +326,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
                         <div class="card-header bg-white d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center gap-2">
                                 <h5 class="mb-0">JazzCash</h5>
-                                <span class="badge-soft"><i class="fa fa-globe me-1"></i>Online</span>
+                                <span class="badge-soft"><i class="bi bi-globe me-1"></i>Online</span>
                             </div>
                             <div class="form-check form-switch m-0">
                                 <input class="form-check-input" type="checkbox" role="switch" id="jazzcash_enabled" name="gateway[jazzcash][enabled]" value="1" <?php echo $jc['enabled'] ? 'checked' : ''; ?> />
@@ -377,7 +377,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
                         <div class="card-header bg-white d-flex align-items-center justify-content-between">
                             <div class="d-flex align-items-center gap-2">
                                 <h5 class="mb-0">Easypaisa</h5>
-                                <span class="badge-soft"><i class="fa fa-globe me-1"></i>Online</span>
+                                <span class="badge-soft"><i class="bi bi-globe me-1"></i>Online</span>
                             </div>
                             <div class="form-check form-switch m-0">
                                 <input class="form-check-input" type="checkbox" role="switch" id="easypaisa_enabled" name="gateway[easypaisa][enabled]" value="1" <?php echo $ep['enabled'] ? 'checked' : ''; ?> />
@@ -424,7 +424,7 @@ function e($str) { return htmlspecialchars((string)$str, ENT_QUOTES, 'UTF-8'); }
             </div>
 
             <div class="d-flex justify-content-end mt-3">
-                <button type="submit" class="btn btn-admin-primary"><i class="fa fa-floppy-disk me-1"></i> Save Changes</button>
+                <button type="submit" class="btn btn-admin-primary"><i class="bi bi-save me-1"></i> Save Changes</button>
             </div>
         </form>
 

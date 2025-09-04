@@ -19,12 +19,34 @@ if ($docRoot && $projRoot && strpos($projRoot, $docRoot) === 0) {
 $BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
 ?>
 <link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-1pA7QzlQv/CU7nzhbW4QEi2qk2ZVjGv8gJYkTn3LQ2mK0m1V6x9r4YkU/1H2Og6g5c5u9uUpOqctZC4YgXy4Vg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/custom/admin.css">
+
+<script>
+  // Ensure responsive viewport meta exists for admin pages
+  (function(){
+    var m = document.querySelector('meta[name="viewport"]');
+    if (!m) {
+      m = document.createElement('meta');
+      m.name = 'viewport';
+      m.content = 'width=device-width, initial-scale=1';
+      document.head && document.head.appendChild(m);
+    }
+  })();
+</script>
 
 <div id="loader">
     <img src="<?= $BASE_PATH ?>/assets/images/loading.gif" alt="Loading...">
 </div>
+<script>
+  // Hide loader when page is ready
+  (function(){
+    function hide(){ var el = document.getElementById('loader'); if (el) el.classList.add('hidden'); }
+    document.addEventListener('DOMContentLoaded', hide);
+    window.addEventListener('load', hide);
+    setTimeout(hide, 3000); // fallback
+  })();
+</script>
 
 <nav class="navbar navbar-expand-lg navbar-dark admin-navbar">
   <div class="container-fluid px-3 px-lg-4">
@@ -32,7 +54,7 @@ $BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
       <!-- Sidebar toggle (mobile) + Brand -->
       <div class="d-flex align-items-center flex-shrink-0">
         <button id="sidebarToggle" class="btn nav-icon-btn me-2 d-lg-none" type="button" aria-label="Toggle sidebar">
-          <i class="fa fa-bars"></i>
+          <i class="bi bi-list"></i>
         </button>
         <a href="dashboard.php" class="navbar-brand d-flex align-items-center">
           <img src="<?= $BASE_PATH ?>/<?php echo htmlspecialchars($logoPath, ENT_QUOTES, 'UTF-8'); ?>" alt="Logo" class="d-inline-block align-text-top">
@@ -47,16 +69,16 @@ $BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
       <div class="collapse navbar-collapse" id="adminNavbar">
         <!-- Primary nav links -->
         <ul class="navbar-nav me-3 mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="fa fa-gauge-high me-1"></i> Dashboard</a></li>
-          <li class="nav-item"><a class="nav-link" href="manage_orders.php"><i class="fa fa-receipt me-1"></i> Orders</a></li>
-          <li class="nav-item"><a class="nav-link" href="manage_products.php"><i class="fa fa-box me-1"></i> Products</a></li>
-          <li class="nav-item"><a class="nav-link" href="manage_users.php"><i class="fa fa-users me-1"></i> Users</a></li>
+          <li class="nav-item"><a class="nav-link" href="dashboard.php"><i class="bi bi-speedometer2 me-1"></i> Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="manage_orders.php"><i class="bi bi-receipt me-1"></i> Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="manage_products.php"><i class="bi bi-box me-1"></i> Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="manage_users.php"><i class="bi bi-people me-1"></i> Users</a></li>
         </ul>
 
         <!-- Search -->
         <form class="d-flex flex-grow-1 me-lg-3 my-2 my-lg-0" role="search" action="manage_products.php" method="get">
           <div class="input-group">
-            <span class="input-group-text bg-transparent border-0 text-secondary"><i class="fa fa-magnifying-glass"></i></span>
+            <span class="input-group-text bg-transparent border-0 text-secondary"><i class="bi bi-search"></i></span>
             <input class="form-control" type="search" placeholder="Search products, orders, customers..." aria-label="Search" name="search" />
           </div>
         </form>
@@ -66,40 +88,40 @@ $BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
           <!-- Quick add dropdown -->
           <div class="dropdown">
             <button class="btn nav-icon-btn d-flex align-items-center gap-2" type="button" id="quickAddMenu" data-bs-toggle="dropdown" aria-expanded="false">
-              <i class="fa fa-plus"></i>
+              <i class="bi bi-plus-lg"></i>
               <span class="d-none d-xl-inline">New</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="quickAddMenu">
-              <li><a class="dropdown-item" href="add_product.php"><i class="fa fa-box me-2"></i>Product</a></li>
-              <li><a class="dropdown-item" href="manage_categories.php"><i class="fa fa-layer-group me-2"></i>Category</a></li>
-              <li><a class="dropdown-item" href="manage_users.php"><i class="fa fa-user-plus me-2"></i>User</a></li>
+              <li><a class="dropdown-item" href="add_product.php"><i class="bi bi-box me-2"></i>Product</a></li>
+              <li><a class="dropdown-item" href="manage_categories.php"><i class="bi bi-layers me-2"></i>Category</a></li>
+              <li><a class="dropdown-item" href="manage_users.php"><i class="bi bi-person-plus me-2"></i>User</a></li>
             </ul>
           </div>
 
           <!-- Notifications dropdown -->
           <div class="dropdown">
             <button class="btn nav-icon-btn position-relative" type="button" id="notifMenu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications">
-              <i class="fa fa-bell"></i>
+              <i class="bi bi-bell"></i>
               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:10px;">3</span>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notifMenu" style="min-width: 280px;">
               <li class="dropdown-header">Recent activity</li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item small" href="manage_orders.php"><i class="fa fa-receipt me-2 text-secondary"></i>2 new orders placed</a></li>
-              <li><a class="dropdown-item small" href="inventory.php"><i class="fa fa-triangle-exclamation me-2 text-warning"></i>Low stock alerts</a></li>
-              <li><a class="dropdown-item small" href="support.php"><i class="fa fa-life-ring me-2 text-info"></i>Support ticket updated</a></li>
+              <li><a class="dropdown-item small" href="manage_orders.php"><i class="bi bi-receipt me-2 text-secondary"></i>2 new orders placed</a></li>
+              <li><a class="dropdown-item small" href="inventory.php"><i class="bi bi-exclamation-triangle me-2 text-warning"></i>Low stock alerts</a></li>
+              <li><a class="dropdown-item small" href="support.php"><i class="bi bi-life-preserver me-2 text-info"></i>Support ticket updated</a></li>
             </ul>
           </div>
 
           <!-- Theme toggle (stub) -->
           <button class="btn nav-icon-btn" type="button" id="themeToggle" aria-label="Toggle theme">
-            <i class="fa fa-sun"></i>
+            <i class="bi bi-sun"></i>
           </button>
 
           <!-- Profile dropdown -->
           <div class="dropdown">
             <button class="btn nav-icon-btn d-flex align-items-center justify-content-center" type="button" id="profileMenu" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Profile">
-              <i class="fa fa-user-shield"></i>
+              <i class="bi bi-person-circle"></i>
             </button>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileMenu">
               <li class="dropdown-header small">
@@ -107,11 +129,11 @@ $BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
                 <div class="text-muted"><?php echo $adminEmail ?: 'Administrator'; ?></div>
               </li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="general_settings.php"><i class="fa fa-gear me-2"></i>Settings</a></li>
-              <li><a class="dropdown-item" href="manage_users.php"><i class="fa fa-users me-2"></i>Users</a></li>
-              <li><a class="dropdown-item" href="manage_orders.php"><i class="fa fa-receipt me-2"></i>Orders</a></li>
+              <li><a class="dropdown-item" href="general_settings.php"><i class="bi bi-gear me-2"></i>Settings</a></li>
+              <li><a class="dropdown-item" href="manage_users.php"><i class="bi bi-people me-2"></i>Users</a></li>
+              <li><a class="dropdown-item" href="manage_orders.php"><i class="bi bi-receipt me-2"></i>Orders</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item text-danger" href="../public/logout.php"><i class="fa fa-arrow-right-from-bracket me-2"></i>Logout</a></li>
+              <li><a class="dropdown-item text-danger" href="../public/logout.php"><i class="bi bi-box-arrow-right me-2"></i>Logout</a></li>
             </ul>
           </div>
         </div>

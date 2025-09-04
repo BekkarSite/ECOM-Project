@@ -1,5 +1,8 @@
 RewriteEngine On
 
+# Serve custom 404 page
+ErrorDocument 404 /ECOM-Project/public/404.php
+
 # Ensure directory request loads public/index.php by default
 # Works for http://localhost/ECOM-Project and http://localhost/ECOM-Project/
 DirectoryIndex public/index.php index.php index.html
@@ -45,3 +48,6 @@ RewriteRule ^([A-Za-z0-9_-]+)/?$ public/$1.php [L,QSA]
 # Also allow links that include .php at the root
 # Example: /products.php -> public/products.php
 RewriteRule ^([A-Za-z0-9_-]+)\.php$ public/$1.php [L,QSA]
+
+# Fallback: anything else should 404
+RewriteRule ^.*$ public/404.php [L,QSA]

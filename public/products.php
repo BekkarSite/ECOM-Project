@@ -14,6 +14,7 @@ if ($categoriesRes) {
 }
 
 // Inputs
+$query = isset($_GET['query']) ? trim((string)$_GET['query']) : '';
 $category_id = isset($_GET['category_id']) ? (int)$_GET['category_id'] : 0;
 $price_min = isset($_GET['price_min']) && $_GET['price_min'] !== '' ? (float)$_GET['price_min'] : null;
 $price_max = isset($_GET['price_max']) && $_GET['price_max'] !== '' ? (float)$_GET['price_max'] : null;
@@ -57,6 +58,15 @@ if ($price_max !== null) {
     $where[] = 'p.price <= ?';
     $types .= 'd';
     $params[] = $price_max;
+}
+
+// Free-text search by name/description
+if ($query !== '') {
+    $where[] = '(p.name LIKE ? OR p.description LIKE ?)';
+    $types .= 'ss';
+    $like = '%' . $query . '%';
+    $params[] = $like;
+    $params[] = $like;
 }
 
 $whereSql = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
@@ -118,6 +128,7 @@ function buildQuery($params) {
 }
 
 $baseQuery = buildQuery([
+    'query' => $query !== '' ? $query : null,
     'category_id' => $category_id ?: null,
     'price_min' => $price_min !== null ? $price_min : null,
     'price_max' => $price_max !== null ? $price_max : null,
@@ -132,6 +143,9 @@ $baseQuery = buildQuery([
         </div>
 
         <form class="card card-body mb-4" method="get" action="products.php">
+            <?php if ($query !== ''): ?>
+                <input type="hidden" name="query" value="<?= htmlspecialchars($query) ?>">
+            <?php endif; ?>
             <div class="row g-3 align-items-end">
                 <div class="col-12 col-md-4">
                     <label for="category_id" class="form-label">Category</label>
@@ -183,7 +197,7 @@ $baseQuery = buildQuery([
                                     </div>
                                 </a>
                                 <div class="card-footer bg-white border-0 pt-0 pb-3 px-3">
-                                    <a href="add-to-cart?product_id=<?= (int)$product['id'] ?>&quantity=1" class="btn btn-outline-primary w-100 add-to-cart">
+                                    <a href="<?= $BASE_PATH ?>/add-to-cart?product_id=<?= (int)$product['id'] ?>&quantity=1" class="btn btn-outline-primary w-100 add-to-cart">
                                         <i class="fa fa-cart-plus me-1"></i> Add to Cart
                                     </a>
                                 </div>

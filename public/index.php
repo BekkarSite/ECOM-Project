@@ -137,7 +137,7 @@ if (empty($featured)) {
                                     </div>
                                 </a>
                                 <div class="card-footer bg-white border-0 pt-0 pb-3 px-3">
-                                    <a href="add-to-cart?product_id=<?= (int)$p['id']; ?>&quantity=1" class="btn btn-outline-primary w-100 add-to-cart">
+                                    <a href="<?= $BASE_PATH ?>/add-to-cart?product_id=<?= (int)$p['id']; ?>&quantity=1" class="btn btn-outline-primary w-100 add-to-cart">
                                         <i class="fa fa-cart-plus me-1"></i> Add to Cart
                                     </a>
                                 </div>

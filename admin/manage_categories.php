@@ -176,7 +176,7 @@ $baseQuery = qbuild([
     <main class="content">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h1 class="h4 mb-0">Categories</h1>
-            <a href="manage_products.php" class="btn btn-outline-secondary"><i class="fa fa-box me-1"></i> Products</a>
+            <a href="manage_products.php" class="btn btn-outline-secondary"><i class="bi bi-box me-1"></i> Products</a>
         </div>
 
         <?php if ($flash_success): ?><div class="alert alert-success"><?= htmlspecialchars($flash_success); ?></div><?php endif; ?>
@@ -201,7 +201,7 @@ $baseQuery = qbuild([
                             </select>
                         </div>
                         <div class="col-12 d-flex gap-2">
-                            <button type="submit" class="btn btn-admin-primary"><i class="fa fa-filter me-1"></i> Filter</button>
+                            <button type="submit" class="btn btn-admin-primary"><i class="bi bi-funnel me-1"></i> Filter</button>
                             <a href="manage_categories.php" class="btn btn-outline-secondary">Reset</a>
                         </div>
                     </div>
@@ -221,7 +221,7 @@ $baseQuery = qbuild([
                         <textarea id="description" name="description" class="form-control" rows="3" placeholder="Optional"></textarea>
                     </div>
                     <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-admin-primary"><i class="fa fa-plus me-1"></i> Add</button>
+                        <button type="submit" class="btn btn-admin-primary"><i class="bi bi-plus-lg me-1"></i> Add</button>
                         <button type="reset" class="btn btn-outline-secondary">Clear</button>
                     </div>
                 </form>
@@ -256,12 +256,12 @@ $baseQuery = qbuild([
                                         <td><?= htmlspecialchars(date('M j, Y', strtotime($c['created_at']))); ?></td>
                                         <td class="text-end">
                                             <div class="d-inline-flex gap-1">
-                                                <a href="edit_category.php?id=<?= (int)$c['id']; ?>" class="btn btn-sm btn-outline-primary"><i class="fa fa-pen"></i></a>
+                                                <a href="edit_category.php?id=<?= (int)$c['id']; ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
                                                 <form method="post" class="d-inline" onsubmit="return confirm('Delete this category? This cannot be undone.');">
                                                     <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf); ?>" />
                                                     <input type="hidden" name="action" value="delete" />
                                                     <input type="hidden" name="id" value="<?= (int)$c['id']; ?>" />
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger" <?= ((int)$c['product_count']>0)?'disabled title="Cannot delete: category has products"':''; ?>><i class="fa fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger" <?= ((int)$c['product_count']>0)?'disabled title="Cannot delete: category has products"':''; ?>><i class="bi bi-trash"></i></button>
                                                 </form>
                                             </div>
                                         </td>

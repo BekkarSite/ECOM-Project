@@ -1,7 +1,6 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../app/includes/auth_guard.php';
 
 $cart = $_SESSION['cart'] ?? [];
 
@@ -80,7 +79,17 @@ if (isset($_GET['action'])) {
 require_once __DIR__ . '/../app/includes/public/public_header.php';
 ?>
 
-<link rel="stylesheet" href="../assets/css/custom/cartstyle.css">
+<?php if (!isset($BASE_PATH)) {
+    // Derive BASE_PATH if header wasn't included for some reason
+    $docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT'])) : '';
+    $projRoot = str_replace('\\', '/', realpath(__DIR__ . '/..'));
+    $baseUri = '';
+    if ($docRoot && $projRoot && strpos($projRoot, $docRoot) === 0) {
+        $baseUri = rtrim(substr($projRoot, strlen($docRoot)), '/');
+    }
+    $BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
+} ?>
+<link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/custom/cartstyle.css">
 
 <main class="cart">
     <h1>Your Cart</h1>

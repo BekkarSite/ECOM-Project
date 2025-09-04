@@ -109,7 +109,7 @@ if ($res = $conn->query('SELECT id, name FROM categories ORDER BY name ASC')) {
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h1 class="h4 mb-0">Add Product</h1>
             <div class="d-flex gap-2">
-                <a href="manage_products.php" class="btn btn-outline-secondary"><i class="fa fa-arrow-left me-1"></i> Back to Products</a>
+                <a href="manage_products.php" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Back to Products</a>
             </div>
         </div>
 
@@ -155,7 +155,7 @@ if ($res = $conn->query('SELECT id, name FROM categories ORDER BY name ASC')) {
                 <div id="image-dimensions" class="mt-1 text-muted"></div>
             </div>
             <div class="d-flex gap-2 mt-3">
-                <button type="submit" class="btn btn-admin-primary"><i class="fa fa-plus me-1"></i> Create Product</button>
+                <button type="submit" class="btn btn-admin-primary"><i class="bi bi-plus-lg me-1"></i> Create Product</button>
                 <button type="reset" class="btn btn-outline-secondary">Clear</button>
             </div>
         </form>

@@ -1,5 +1,5 @@
 <?php
-// Admin General Settings: branding, company info, social links with logo upload
+// Admin General Settings: branding, company info, social links with logo upload and social toggles
 session_start();
 if (!isset($_SESSION['admin_id'])) {
     header('Location: admin_login.php');
@@ -22,7 +22,15 @@ $errors  = [];
 $settingKeys = [
     'site_title', 'site_tagline', 'site_description',
     'company_name', 'company_email', 'company_phone', 'company_address',
-    'social_facebook', 'social_twitter', 'social_instagram',
+    'social_facebook', 'social_facebook_enabled',
+    'social_twitter', 'social_twitter_enabled',
+    'social_instagram', 'social_instagram_enabled',
+    'social_youtube', 'social_youtube_enabled',
+    'social_linkedin', 'social_linkedin_enabled',
+    'social_tiktok', 'social_tiktok_enabled',
+    'social_telegram', 'social_telegram_enabled',
+    'social_pinterest', 'social_pinterest_enabled',
+    'whatsapp_enabled', 'whatsapp_number', 'live_chat_enabled', 'live_chat_require_name', 'live_chat_require_email',
     'site_logo'
 ];
 
@@ -40,7 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fields = [
         'site_title', 'site_tagline', 'site_description',
         'company_name', 'company_email', 'company_phone', 'company_address',
-        'social_facebook', 'social_twitter', 'social_instagram'
+        'social_facebook', 'social_twitter', 'social_instagram',
+        'social_youtube', 'social_linkedin', 'social_tiktok', 'social_telegram', 'social_pinterest',
+        'whatsapp_number'
     ];
 
     // Validation helpers
@@ -49,13 +59,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Please provide a valid company email address.';
     }
 
-    $urlFields = ['social_facebook', 'social_twitter', 'social_instagram'];
+    $urlFields = [
+        'social_facebook', 'social_twitter', 'social_instagram',
+        'social_youtube', 'social_linkedin', 'social_tiktok', 'social_telegram', 'social_pinterest'
+    ];
     foreach ($urlFields as $uf) {
         $url = trim($_POST[$uf] ?? '');
         if ($url !== '' && !filter_var($url, FILTER_VALIDATE_URL)) {
             $label = ucwords(str_replace('_', ' ', str_replace('social_', '', $uf)));
             $errors[] = "Invalid URL for {$label}.";
         }
+    }
+
+    // WhatsApp enable/disable toggle
+    $whatsapp_enabled = isset($_POST['whatsapp_enabled']) ? '1' : '0';
+    set_setting($conn, 'whatsapp_enabled', $whatsapp_enabled);
+    $settings['whatsapp_enabled'] = $whatsapp_enabled;
+
+    // Live chat enable/disable toggle
+    $live_chat_enabled = isset($_POST['live_chat_enabled']) ? '1' : '0';
+    set_setting($conn, 'live_chat_enabled', $live_chat_enabled);
+    $settings['live_chat_enabled'] = $live_chat_enabled;
+
+    // Live chat identity requirements
+    $live_chat_require_name = isset($_POST['live_chat_require_name']) ? '1' : '0';
+    $live_chat_require_email = isset($_POST['live_chat_require_email']) ? '1' : '0';
+    set_setting($conn, 'live_chat_require_name', $live_chat_require_name);
+    set_setting($conn, 'live_chat_require_email', $live_chat_require_email);
+    $settings['live_chat_require_name'] = $live_chat_require_name;
+    $settings['live_chat_require_email'] = $live_chat_require_email;
+
+    // Social enable toggles
+    $socialPlatforms = ['facebook','twitter','instagram','youtube','linkedin','tiktok','telegram','pinterest'];
+    foreach ($socialPlatforms as $sp) {
+        $key = 'social_' . $sp . '_enabled';
+        $val = isset($_POST[$key]) ? '1' : '0';
+        set_setting($conn, $key, $val);
+        $settings[$key] = $val;
     }
 
     // If requested, remove current logo
@@ -259,17 +299,101 @@ $settings = get_settings($conn, $settingKeys);
                         </div>
                         <div class="card-body">
                             <div class="row g-3">
-                                <div class="col-12 col-md-4">
-                                    <label class="form-label fw-semibold" for="social_facebook">Facebook URL</label>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch mb-1">
+                                        <input class="form-check-input" type="checkbox" id="social_facebook_enabled" name="social_facebook_enabled" value="1" <?php echo (($settings['social_facebook_enabled'] ?? '1') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="social_facebook_enabled"><i class="bi bi-facebook me-1"></i> Facebook</label>
+                                    </div>
                                     <input type="text" class="form-control" name="social_facebook" id="social_facebook" value="<?php echo htmlspecialchars($settings['social_facebook'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="https://facebook.com/yourpage">
                                 </div>
-                                <div class="col-12 col-md-4">
-                                    <label class="form-label fw-semibold" for="social_twitter">Twitter URL</label>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch mb-1">
+                                        <input class="form-check-input" type="checkbox" id="social_twitter_enabled" name="social_twitter_enabled" value="1" <?php echo (($settings['social_twitter_enabled'] ?? '1') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="social_twitter_enabled"><i class="bi bi-twitter-x me-1"></i> Twitter</label>
+                                    </div>
                                     <input type="text" class="form-control" name="social_twitter" id="social_twitter" value="<?php echo htmlspecialchars($settings['social_twitter'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="https://x.com/yourhandle">
                                 </div>
-                                <div class="col-12 col-md-4">
-                                    <label class="form-label fw-semibold" for="social_instagram">Instagram URL</label>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch mb-1">
+                                        <input class="form-check-input" type="checkbox" id="social_instagram_enabled" name="social_instagram_enabled" value="1" <?php echo (($settings['social_instagram_enabled'] ?? '1') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="social_instagram_enabled"><i class="bi bi-instagram me-1"></i> Instagram</label>
+                                    </div>
                                     <input type="text" class="form-control" name="social_instagram" id="social_instagram" value="<?php echo htmlspecialchars($settings['social_instagram'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="https://instagram.com/yourhandle">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch mb-1">
+                                        <input class="form-check-input" type="checkbox" id="social_youtube_enabled" name="social_youtube_enabled" value="1" <?php echo (($settings['social_youtube_enabled'] ?? '0') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="social_youtube_enabled"><i class="bi bi-youtube me-1"></i> YouTube</label>
+                                    </div>
+                                    <input type="text" class="form-control" name="social_youtube" id="social_youtube" value="<?php echo htmlspecialchars($settings['social_youtube'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="https://youtube.com/@yourchannel">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch mb-1">
+                                        <input class="form-check-input" type="checkbox" id="social_linkedin_enabled" name="social_linkedin_enabled" value="1" <?php echo (($settings['social_linkedin_enabled'] ?? '0') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="social_linkedin_enabled"><i class="bi bi-linkedin me-1"></i> LinkedIn</label>
+                                    </div>
+                                    <input type="text" class="form-control" name="social_linkedin" id="social_linkedin" value="<?php echo htmlspecialchars($settings['social_linkedin'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="https://linkedin.com/company/yourcompany">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch mb-1">
+                                        <input class="form-check-input" type="checkbox" id="social_tiktok_enabled" name="social_tiktok_enabled" value="1" <?php echo (($settings['social_tiktok_enabled'] ?? '0') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="social_tiktok_enabled"><i class="bi bi-tiktok me-1"></i> TikTok</label>
+                                    </div>
+                                    <input type="text" class="form-control" name="social_tiktok" id="social_tiktok" value="<?php echo htmlspecialchars($settings['social_tiktok'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="https://www.tiktok.com/@yourhandle">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch mb-1">
+                                        <input class="form-check-input" type="checkbox" id="social_telegram_enabled" name="social_telegram_enabled" value="1" <?php echo (($settings['social_telegram_enabled'] ?? '0') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="social_telegram_enabled"><i class="bi bi-telegram me-1"></i> Telegram</label>
+                                    </div>
+                                    <input type="text" class="form-control" name="social_telegram" id="social_telegram" value="<?php echo htmlspecialchars($settings['social_telegram'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="https://t.me/yourchannel">
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch mb-1">
+                                        <input class="form-check-input" type="checkbox" id="social_pinterest_enabled" name="social_pinterest_enabled" value="1" <?php echo (($settings['social_pinterest_enabled'] ?? '0') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="social_pinterest_enabled"><i class="bi bi-pinterest me-1"></i> Pinterest</label>
+                                    </div>
+                                    <input type="text" class="form-control" name="social_pinterest" id="social_pinterest" value="<?php echo htmlspecialchars($settings['social_pinterest'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="https://pinterest.com/yourprofile">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row g-3 align-items-end">
+                                <div class="col-12 col-md-4">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="whatsapp_enabled" name="whatsapp_enabled" value="1" <?php echo (($settings['whatsapp_enabled'] ?? '0') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="whatsapp_enabled">Enable WhatsApp</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-8">
+                                    <label class="form-label fw-semibold" for="whatsapp_number">WhatsApp Number</label>
+                                    <input type="text" class="form-control" name="whatsapp_number" id="whatsapp_number" value="<?php echo htmlspecialchars($settings['whatsapp_number'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" placeholder="e.g., +923001234567">
+                                    <div class="form-text">International format recommended. When enabled and a number is set, a WhatsApp icon appears in the site footer.</div>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row g-3 align-items-center">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="live_chat_enabled" name="live_chat_enabled" value="1" <?php echo (($settings['live_chat_enabled'] ?? '0') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="live_chat_enabled">Enable Live Chat</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="text-muted small">Shows a chat widget on the storefront. Manage conversations in Admin → Live Chat.</div>
+                                </div>
+                            </div>
+                            <div class="row g-3 align-items-center mt-1">
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="live_chat_require_name" name="live_chat_require_name" value="1" <?php echo (($settings['live_chat_require_name'] ?? '0') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="live_chat_require_name">Require Name before chat</label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="live_chat_require_email" name="live_chat_require_email" value="1" <?php echo (($settings['live_chat_require_email'] ?? '0') === '1') ? 'checked' : ''; ?>>
+                                        <label class="form-check-label fw-semibold" for="live_chat_require_email">Require Email before chat</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -278,7 +402,7 @@ $settings = get_settings($conn, $settingKeys);
             </div>
 
             <div class="d-flex justify-content-end mt-3">
-                <button type="submit" class="btn btn-admin-primary"><i class="fa fa-floppy-disk me-1"></i> Save Settings</button>
+                <button type="submit" class="btn btn-admin-primary"><i class="bi bi-save me-1"></i> Save Settings</button>
             </div>
         </form>
     </main>

@@ -178,7 +178,7 @@ if ($view_product > 0) {
     <main class="content">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h1 class="h4 mb-0">Inventory</h1>
-            <a href="dashboard.php" class="btn btn-outline-secondary"><i class="fa fa-arrow-left me-1"></i> Back</a>
+            <a href="dashboard.php" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Back</a>
         </div>
 
         <?php if ($flash_success): ?><div class="alert alert-success"><?= htmlspecialchars($flash_success); ?></div><?php endif; ?>
@@ -216,7 +216,7 @@ if ($view_product > 0) {
                     </div>
                 </div>
                 <div class="col-12 d-flex gap-2">
-                    <button type="submit" class="btn btn-admin-primary"><i class="fa fa-filter me-1"></i> Filter</button>
+                    <button type="submit" class="btn btn-admin-primary"><i class="bi bi-funnel me-1"></i> Filter</button>
                     <a href="inventory.php" class="btn btn-outline-secondary">Reset</a>
                 </div>
             </div>
@@ -250,7 +250,7 @@ if ($view_product > 0) {
                                         <td class="text-end"><?= htmlspecialchars(number_format((float)$p['price'], 2)); ?> PKR</td>
                                         <td class="text-end">
                                             <div class="btn-group">
-                                                <a href="inventory.php?<?= $baseQuery ? $baseQuery . '&' : '' ?>page=<?= (int)$page; ?>&view_product=<?= (int)$p['id']; ?>" class="btn btn-sm btn-outline-primary"><i class="fa fa-clock-rotate-left me-1"></i> History</a>
+                                                <a href="inventory.php?<?= $baseQuery ? $baseQuery . '&' : '' ?>page=<?= (int)$page; ?>&view_product=<?= (int)$p['id']; ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-clock-history me-1"></i> History</a>
                                                 <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <span class="visually-hidden">Toggle Dropdown</span>
                                                 </button>

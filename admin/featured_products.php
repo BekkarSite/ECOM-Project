@@ -208,7 +208,7 @@ function e($s){return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');}
                 <div class="text-muted-600">Select and reorder products featured on the home page.</div>
             </div>
             <div class="d-flex gap-2">
-                <a href="manage_products.php" class="btn btn-outline-secondary"><i class="fa fa-box me-1"></i> Manage Products</a>
+                <a href="manage_products.php" class="btn btn-outline-secondary"><i class="bi bi-box me-1"></i> Manage Products</a>
             </div>
         </div>
 
@@ -222,7 +222,7 @@ function e($s){return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');}
                     <input id="search" name="search" class="form-control" placeholder="Product name or ID" value="<?= e($search); ?>" />
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-admin-primary"><i class="fa fa-search me-1"></i> Search</button>
+                    <button type="submit" class="btn btn-admin-primary"><i class="bi bi-search me-1"></i> Search</button>
                     <a href="featured_products.php" class="btn btn-outline-secondary">Reset</a>
                 </div>
             </div>
@@ -286,7 +286,7 @@ function e($s){return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');}
                 <div class="d-flex gap-2">
                     <a href="featured_products.php?page=<?= max(1,$page-1); ?>&search=<?= urlencode($search); ?>" class="btn btn-outline-secondary<?= $page<=1?' disabled':''; ?>">&laquo; Prev</a>
                     <a href="featured_products.php?page=<?= min($total_pages,$page+1); ?>&search=<?= urlencode($search); ?>" class="btn btn-outline-secondary<?= $page>=$total_pages?' disabled':''; ?>">Next &raquo;</a>
-                    <button type="submit" class="btn btn-admin-primary"><i class="fa fa-floppy-disk me-1"></i> Save Featured</button>
+                    <button type="submit" class="btn btn-admin-primary"><i class="bi bi-save me-1"></i> Save Featured</button>
                 </div>
             </div>
 
@@ -299,7 +299,7 @@ function e($s){return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');}
                     <ul class="drag-list" id="featuredList">
                         <?php foreach ($currentProducts as $cp): $cid=(int)$cp['id']; ?>
                             <li class="drag-item" draggable="true" data-id="<?= $cid; ?>">
-                                <span class="drag-handle"><i class="fa fa-grip-vertical"></i></span>
+                                <span class="drag-handle"><i class="bi bi-grip-vertical"></i></span>
                                 <?php if (!empty($cp['image'])): ?>
                                     <img src="../assets/images/<?= e($cp['image']); ?>" alt="<?= e($cp['name']); ?>" style="width:36px;height:36px;object-fit:cover;border-radius:4px;">
                                 <?php else: ?>
@@ -309,7 +309,7 @@ function e($s){return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');}
                                     <div class="fw-semibold">#<?= $cid; ?> &middot; <?= e($cp['name']); ?></div>
                                     <div class="text-muted small"><?= e(number_format((float)$cp['price'],2)); ?> PKR</div>
                                 </div>
-                                <button type="button" class="btn btn-sm btn-outline-secondary remove-featured" data-id="<?= $cid; ?>"><i class="fa fa-xmark"></i></button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary remove-featured" data-id="<?= $cid; ?>"><i class="bi bi-x"></i></button>
                             </li>
                         <?php endforeach; ?>
                     </ul>

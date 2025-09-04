@@ -120,8 +120,8 @@ $baseQuery = q([
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h1 class="h4 mb-0">Products</h1>
             <div class="d-flex gap-2">
-                <a href="inventory.php" class="btn btn-outline-secondary"><i class="fa fa-warehouse me-1"></i> Inventory</a>
-                <a href="add_product.php" class="btn btn-admin-primary"><i class="fa fa-plus me-1"></i> Add Product</a>
+                <a href="inventory.php" class="btn btn-outline-secondary"><i class="bi bi-inboxes me-1"></i> Inventory</a>
+                <a href="add_product.php" class="btn btn-admin-primary"><i class="bi bi-plus-lg me-1"></i> Add Product</a>
             </div>
         </div>
 
@@ -164,7 +164,7 @@ $baseQuery = q([
                     </select>
                 </div>
                 <div class="col-12 d-flex gap-2">
-                    <button type="submit" class="btn btn-admin-primary"><i class="fa fa-filter me-1"></i> Filter</button>
+                    <button type="submit" class="btn btn-admin-primary"><i class="bi bi-funnel me-1"></i> Filter</button>
                     <a href="manage_products.php" class="btn btn-outline-secondary">Reset</a>
                 </div>
             </div>
@@ -208,12 +208,12 @@ $baseQuery = q([
                                         <td><?= htmlspecialchars(date('M j, Y', strtotime($p['created_at']))); ?></td>
                                         <td class="text-end">
                                             <div class="d-inline-flex gap-1">
-                                                <a href="edit_product.php?id=<?= (int)$p['id']; ?>" class="btn btn-sm btn-outline-primary"><i class="fa fa-pen"></i></a>
+                                                <a href="edit_product.php?id=<?= (int)$p['id']; ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil"></i></a>
                                                 <form method="post" action="delete_product.php" onsubmit="return confirm('Delete this product? This cannot be undone.');" class="d-inline">
                                                     <input type="hidden" name="csrf" value="<?= htmlspecialchars($csrf); ?>" />
                                                     <input type="hidden" name="id" value="<?= (int)$p['id']; ?>" />
                                                     <input type="hidden" name="redirect" value="<?= htmlspecialchars($_SERVER['REQUEST_URI']); ?>" />
-                                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>
+                                                    <button type="submit" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
                                                 </form>
                                             </div>
                                         </td>

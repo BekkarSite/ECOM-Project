@@ -87,9 +87,9 @@ if ($res = $conn->query("SHOW TABLES LIKE 'payment_gateways'")) {
                 <div class="text-muted-600">Overview of your store and POS operations</div>
             </div>
             <div class="d-flex gap-2">
-                <a href="add_product.php" class="btn btn-admin-primary"><i class="fa fa-plus me-1"></i> Add Product</a>
-                <a href="manage_orders.php" class="btn btn-outline-secondary"><i class="fa fa-receipt me-1"></i> Manage Orders</a>
-                <a href="pos.php" class="btn btn-outline-secondary"><i class="fa fa-cash-register me-1"></i> POS Register</a>
+                <a href="add_product.php" class="btn btn-admin-primary"><i class="bi bi-plus-lg me-1"></i> Add Product</a>
+                <a href="manage_orders.php" class="btn btn-outline-secondary"><i class="bi bi-receipt me-1"></i> Manage Orders</a>
+                <a href="pos.php" class="btn btn-outline-secondary"><i class="bi bi-cash-coin me-1"></i> POS Register</a>
             </div>
         </div>
 
@@ -103,7 +103,7 @@ if ($res = $conn->query("SHOW TABLES LIKE 'payment_gateways'")) {
                                 <div class="text-muted-600">Orders</div>
                                 <div class="h4 mb-0"><?php echo number_format($orderCount); ?></div>
                             </div>
-                            <div class="badge-soft"><i class="fa fa-receipt"></i></div>
+                            <div class="badge-soft"><i class="bi bi-receipt"></i></div>
                         </div>
                         <div class="small text-muted mt-2">Pending: <?php echo number_format($pendingOrders); ?> · Paid: <?php echo number_format($paidOrders); ?></div>
                     </div>
@@ -117,7 +117,7 @@ if ($res = $conn->query("SHOW TABLES LIKE 'payment_gateways'")) {
                                 <div class="text-muted-600">Revenue</div>
                                 <div class="h4 mb-0"><?php echo number_format($totalRevenue, 2); ?></div>
                             </div>
-                            <div class="badge-soft"><i class="fa fa-dollar-sign"></i></div>
+                            <div class="badge-soft"><i class="bi bi-currency-dollar"></i></div>
                         </div>
                         <div class="small text-muted mt-2">All-time gross</div>
                     </div>
@@ -131,7 +131,7 @@ if ($res = $conn->query("SHOW TABLES LIKE 'payment_gateways'")) {
                                 <div class="text-muted-600">Products</div>
                                 <div class="h4 mb-0"><?php echo number_format($productCount); ?></div>
                             </div>
-                            <div class="badge-soft"><i class="fa fa-box"></i></div>
+                            <div class="badge-soft"><i class="bi bi-box"></i></div>
                         </div>
                         <div class="small text-muted mt-2">Catalog size</div>
                     </div>
@@ -145,7 +145,7 @@ if ($res = $conn->query("SHOW TABLES LIKE 'payment_gateways'")) {
                                 <div class="text-muted-600">Customers</div>
                                 <div class="h4 mb-0"><?php echo number_format($customerCount); ?></div>
                             </div>
-                            <div class="badge-soft"><i class="fa fa-users"></i></div>
+                            <div class="badge-soft"><i class="bi bi-people"></i></div>
                         </div>
                         <div class="small text-muted mt-2">Registered customers</div>
                     </div>
@@ -261,9 +261,9 @@ if ($res = $conn->query("SHOW TABLES LIKE 'payment_gateways'")) {
                     <div class="card-header bg-white d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Operations & POS</h5>
                         <div class="d-flex gap-2">
-                            <a href="manage_products.php" class="btn btn-sm btn-outline-secondary"><i class="fa fa-box me-1"></i> Products</a>
-                            <a href="manage_orders.php" class="btn btn-sm btn-outline-secondary"><i class="fa fa-receipt me-1"></i> Orders</a>
-                            <a href="manage_users.php" class="btn btn-sm btn-outline-secondary"><i class="fa fa-users me-1"></i> Customers</a>
+                            <a href="manage_products.php" class="btn btn-sm btn-outline-secondary"><i class="bi bi-box me-1"></i> Products</a>
+                            <a href="manage_orders.php" class="btn btn-sm btn-outline-secondary"><i class="bi bi-receipt me-1"></i> Orders</a>
+                            <a href="manage_users.php" class="btn btn-sm btn-outline-secondary"><i class="bi bi-people me-1"></i> Customers</a>
                         </div>
                     </div>
                     <div class="card-body">
@@ -271,7 +271,7 @@ if ($res = $conn->query("SHOW TABLES LIKE 'payment_gateways'")) {
                             <div class="col-12 col-md-6">
                                 <div class="p-3 rounded-12 border">
                                     <div class="d-flex align-items-center mb-2">
-                                        <div class="badge-soft me-2"><i class="fa fa-cash-register"></i></div>
+                                        <div class="badge-soft me-2"><i class="bi bi-cash-coin"></i></div>
                                         <strong>POS Register</strong>
                                     </div>
                                     <p class="mb-2 text-muted">Launch a simple in-store checkout to create walk-in sales.</p>
@@ -281,7 +281,7 @@ if ($res = $conn->query("SHOW TABLES LIKE 'payment_gateways'")) {
                             <div class="col-12 col-md-6">
                                 <div class="p-3 rounded-12 border">
                                     <div class="d-flex align-items-center mb-2">
-                                        <div class="badge-soft me-2"><i class="fa fa-barcode"></i></div>
+                                        <div class="badge-soft me-2"><i class="bi bi-upc-scan"></i></div>
                                         <strong>Quick Scan</strong>
                                     </div>
                                     <p class="mb-2 text-muted">Use barcode scanner in the POS to search and add products.</p>

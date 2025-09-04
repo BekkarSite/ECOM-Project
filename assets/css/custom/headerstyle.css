@@ -29,3 +29,32 @@
 .cart-count {
     font-size: 0.75rem;
 }
+
+/* Search suggestions dropdown */
+.search-suggestions {
+    background: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    z-index: 1050; /* Above navbar */
+    max-height: 320px;
+    overflow-y: auto;
+}
+.search-suggestion-item {
+    padding: 0.5rem 0.75rem;
+    color: #212529;
+    display: flex;
+}
+.search-suggestion-item:hover,
+.search-suggestion-item.active {
+    background: #f8f9fa;
+}
+.search-suggestion-viewall {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-top: 1px solid #eee;
+    color: #0d6efd;
+}
+.search-suggestion-viewall:hover,
+.search-suggestion-viewall.active {
+    background: #f8f9fa;
+}

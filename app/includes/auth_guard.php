@@ -18,6 +18,13 @@ if ($isAjax) {
     exit;
 }
 
+$docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT'])) : '';
+$projRoot = str_replace('\\', '/', realpath(__DIR__ . '/..'));
+$baseUri = '';
+if ($docRoot && $projRoot && strpos($projRoot, $docRoot) === 0) {
+    $baseUri = rtrim(substr($projRoot, strlen($docRoot)), '/');
+}
+$BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
 $next = urlencode($_SERVER['REQUEST_URI'] ?? '');
-header('Location: login.php' . ($next ? ('?next=' . $next) : ''));
+header('Location: ' . $BASE_PATH . '/login.php' . ($next ? ('?next=' . $next) : ''));
 exit;

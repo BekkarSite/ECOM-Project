@@ -1,7 +1,14 @@
 <?php
 session_start();
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../app/includes/auth_guard.php';
+// Compute BASE_PATH for redirects (works under subfolders)
+$docRoot = isset($_SERVER['DOCUMENT_ROOT']) ? str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT'])) : '';
+$projRoot = str_replace('\\', '/', realpath(__DIR__ . '/..'));
+$baseUri = '';
+if ($docRoot && $projRoot && strpos($projRoot, $docRoot) === 0) {
+    $baseUri = rtrim(substr($projRoot, strlen($docRoot)), '/');
+}
+$BASE_PATH = $baseUri ? '/' . ltrim($baseUri, '/') : '';
 
 $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
     strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
@@ -11,7 +18,7 @@ if (!isset($_GET['product_id'], $_GET['quantity'])) {
         header('Content-Type: application/json', true, 400);
         echo json_encode(['error' => 'Missing parameters']);
     } else {
-        header('Location: products.php');
+        header('Location: ' . $BASE_PATH . '/products.php');
     }
     exit();
 }
@@ -31,7 +38,7 @@ if (!$exists) {
         header('Content-Type: application/json', true, 400);
         echo json_encode(['error' => 'Invalid product']);
     } else {
-        header('Location: products.php');
+        header('Location: ' . $BASE_PATH . '/products.php');
     }
     exit();
 }
@@ -45,6 +52,6 @@ if ($isAjax) {
     header('Content-Type: application/json');
     echo json_encode(['count' => array_sum($_SESSION['cart'])]);
 } else {
-    header('Location: cart.php');
+    header('Location: ' . $BASE_PATH . '/cart.php');
 }
 exit();

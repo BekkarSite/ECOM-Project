@@ -163,7 +163,7 @@ $baseQuery = buildQuery(['status' => $status !== '' ? $status : null, 'search' =
     <main class="content">
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h1 class="h4 mb-0">Order Management</h1>
-            <a class="btn btn-outline-secondary" href="dashboard.php"><i class="fa fa-arrow-left me-1"></i> Back</a>
+            <a class="btn btn-outline-secondary" href="dashboard.php"><i class="bi bi-arrow-left me-1"></i> Back</a>
         </div>
 
         <?php if ($flash_success): ?>
@@ -189,7 +189,7 @@ $baseQuery = buildQuery(['status' => $status !== '' ? $status : null, 'search' =
                     <input id="search" name="search" class="form-control" value="<?= htmlspecialchars($search); ?>" placeholder="e.g., 1001 or customer@example.com" />
                 </div>
                 <div class="col-12 col-md-2 d-grid">
-                    <button class="btn btn-admin-primary" type="submit"><i class="fa fa-filter me-1"></i> Filter</button>
+                    <button class="btn btn-admin-primary" type="submit"><i class="bi bi-funnel me-1"></i> Filter</button>
                 </div>
                 <div class="col-12 col-md-2 d-grid">
                     <a class="btn btn-outline-secondary" href="manage_orders.php">Reset</a>
@@ -224,7 +224,7 @@ $baseQuery = buildQuery(['status' => $status !== '' ? $status : null, 'search' =
                                         <td class="text-end fw-semibold"><?= htmlspecialchars(number_format((float)$o['total_price'], 2)); ?> PKR</td>
                                         <td class="text-end">
                                             <a class="btn btn-sm btn-outline-primary" href="manage_orders.php?<?= $baseQuery ? $baseQuery . '&' : '' ?>page=<?= (int)$page; ?>&view_id=<?= (int)$o['id']; ?>">
-                                                <i class="fa fa-eye me-1"></i> View
+                                                <i class="bi bi-eye me-1"></i> View
                                             </a>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

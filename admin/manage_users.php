@@ -238,8 +238,8 @@ $baseQuery = buildQuery([
         <div class="d-flex align-items-center justify-content-between mb-3">
             <h1 class="h4 mb-0">Manage Users</h1>
             <div class="d-flex gap-2">
-                <button class="btn btn-admin-primary" data-bs-toggle="modal" data-bs-target="#createUserModal"><i class="fa fa-user-plus me-1"></i> New User</button>
-                <a class="btn btn-outline-secondary" href="dashboard.php"><i class="fa fa-arrow-left me-1"></i> Back</a>
+                <button class="btn btn-admin-primary" data-bs-toggle="modal" data-bs-target="#createUserModal"><i class="bi bi-person-plus me-1"></i> New User</button>
+                <a class="btn btn-outline-secondary" href="dashboard.php"><i class="bi bi-arrow-left me-1"></i> Back</a>
             </div>
         </div>
 
@@ -283,7 +283,7 @@ $baseQuery = buildQuery([
                     </select>
                 </div>
                 <div class="col-12 col-md-3 d-flex gap-2">
-                    <button type="submit" class="btn btn-admin-primary flex-fill"><i class="fa fa-filter me-1"></i> Filter</button>
+                    <button type="submit" class="btn btn-admin-primary flex-fill"><i class="bi bi-funnel me-1"></i> Filter</button>
                     <a href="manage_users.php" class="btn btn-outline-secondary">Reset</a>
                 </div>
             </div>
@@ -292,7 +292,7 @@ $baseQuery = buildQuery([
         <div class="card mb-3">
             <div class="card-body d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center gap-2">
-                    <i class="fa fa-user-lock text-muted"></i>
+                    <i class="bi bi-person-lock text-muted"></i>
                     <strong>Pause User Registration</strong>
                 </div>
                 <form method="post" class="m-0">
@@ -338,7 +338,7 @@ $baseQuery = buildQuery([
                                         <td><?= htmlspecialchars(date('M j, Y', strtotime($u['created_at']))); ?></td>
                                         <td class="text-end">
                                             <div class="btn-group">
-                                                <a href="edit_user.php?id=<?= (int)$u['id']; ?>" class="btn btn-sm btn-outline-primary"><i class="fa fa-pen me-1"></i> Edit</a>
+                                                <a href="edit_user.php?id=<?= (int)$u['id']; ?>" class="btn btn-sm btn-outline-primary"><i class="bi bi-pencil me-1"></i> Edit</a>
                                                 <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                                     <span class="visually-hidden">Toggle Dropdown</span>
                                                 </button>

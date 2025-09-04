@@ -1,14 +1,15 @@
-<!-- public/order_confirmation.php -->
 <?php
+// order_confirmation.php — ensure no output before headers
 session_start();
 require_once __DIR__ . '/../config/db.php';
-require_once __DIR__ . '/../app/includes/public/public_header.php';
 
-// Ensure the user is logged in
+// Ensure the user is logged in BEFORE any output
 if (!isset($_SESSION['user_id'])) {
     header('Location: login.php');
     exit();
 }
+
+require_once __DIR__ . '/../app/includes/public/public_header.php';
 
 $order = null;
 $order_items = null;
@@ -65,6 +66,7 @@ if (isset($_GET['order_id'])) {
 
         <p class="total">Total Price: <?= number_format((float) $order['total_price'], 2); ?> PKR</p>
         <p class="status">Status: <?= htmlspecialchars(ucfirst($order['status']), ENT_QUOTES, 'UTF-8'); ?></p>
+
         <a href="index.php" class="btn">Continue Shopping</a>
     <?php endif; ?>
 </main>

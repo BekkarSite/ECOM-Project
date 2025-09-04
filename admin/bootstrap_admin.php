@@ -336,8 +336,8 @@ $conn->query("INSERT IGNORE INTO currencies (code, name, symbol, rate, is_defaul
 
 // Payment gateways placeholders
 $conn->query("INSERT IGNORE INTO payment_gateways (name, enabled, config) VALUES
-('PayPal', 0, '{"client_id":"","secret":"","mode":"sandbox"}'),
-('Stripe', 0, '{"publishable_key":"","secret_key":""}')");
+('PayPal', 0, '{\"client_id\":\"\",\"secret\":\"\",\"mode\":\"sandbox\"}'),
+('Stripe', 0, '{\"publishable_key\":\"\",\"secret_key\":\"\"}')");
 
 // Create Admin role if missing and map all permissions
 $adminRoleId = null;

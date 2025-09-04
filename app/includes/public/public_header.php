@@ -47,6 +47,11 @@ if (!isset($_SESSION['user_id']) && in_array($currentScript, $protected, true)) 
     $publicLogoPath = get_setting($conn, 'site_logo', 'assets/images/logo.png');
     $current = basename($_SERVER['SCRIPT_NAME'] ?? '');
     function nav_active($current, $target) { return $current === $target ? ' active' : ''; }
+    // Pre-fill search in header on products page
+    $searchPrefill = '';
+    if ($current === 'products.php') {
+        $searchPrefill = htmlspecialchars($_GET['query'] ?? '', ENT_QUOTES, 'UTF-8');
+    }
     ?>
     <script>
         // Hide the loader once the page has fully loaded
@@ -84,8 +89,8 @@ if (!isset($_SESSION['user_id']) && in_array($currentScript, $protected, true)) 
                     <li class="nav-item"><a class="nav-link<?php echo nav_active($current, 'contact.php'); ?>" href="contact.php">Contact</a></li>
                 </ul>
 
-                <form action="search.php" method="GET" class="d-flex mb-2 mb-lg-0 w-100 w-lg-auto" role="search">
-                    <input class="form-control" type="text" name="query" placeholder="Search products..." required>
+                <form action="products.php" method="GET" class="d-flex mb-2 mb-lg-0 w-100 w-lg-auto" role="search">
+                    <input class="form-control" type="text" name="query" placeholder="Search products..." required value="<?= $searchPrefill ?>">
                     <button class="btn btn-outline-primary ms-2" type="submit"><i class="fa fa-search"></i></button>
                 </form>
 
@@ -128,9 +133,9 @@ if (!isset($_SESSION['user_id']) && in_array($currentScript, $protected, true)) 
         </div>
         <div class="offcanvas-body d-flex flex-column gap-3">
             <!-- Search -->
-            <form action="search.php" method="GET" role="search">
+            <form action="products.php" method="GET" role="search">
                 <div class="input-group">
-                    <input class="form-control" type="text" name="query" placeholder="Search products..." required>
+                    <input class="form-control" type="text" name="query" placeholder="Search products..." required value="<?= $searchPrefill ?>">
                     <button class="btn btn-outline-primary" type="submit"><i class="fa fa-search"></i></button>
                 </div>
             </form>
@@ -168,7 +173,7 @@ if (!isset($_SESSION['user_id']) && in_array($currentScript, $protected, true)) 
             <div class="mt-auto">
                 <a href="cart.php" class="btn btn-outline-dark w-100 position-relative">
                     <i class="fa fa-shopping-cart me-2"></i> View Cart
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-count">
                         <?php echo array_sum($_SESSION['cart'] ?? []); ?>
                     </span>
                 </a>

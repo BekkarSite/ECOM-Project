@@ -1,8 +1,8 @@
 <?php
+// login.php — handle redirects before any output
 session_start();
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../app/helpers/security.php';
-require_once __DIR__ . '/../app/includes/public/public_header.php';
 
 // Prepare next redirect parameter if provided
 $next = isset($_GET['next']) ? $_GET['next'] : '';
@@ -43,6 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 // Always generate a new CAPTCHA challenge when showing the form
 $captchaQuestion = captcha_generate();
+// Include header only after all potential header() redirects
+require_once __DIR__ . '/../app/includes/public/public_header.php';
 ?>
 <link rel="stylesheet" href="<?= $BASE_PATH ?>/assets/css/custom/loginstyle.css">
 
